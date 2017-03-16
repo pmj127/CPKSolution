@@ -1,0 +1,5 @@
+﻿@model CPK_Project.Models.ReportsView
+@{
+    ViewBag.Title = "Report Viewer";
+}
+<iframe id="frmReport" src="@Model.ViewerURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="no"></iframe>

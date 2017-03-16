@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @Html.ActionLink("View Reports", "Index", "ReportView", new { ReportID = 1, Width = 100, Height = 650 },null)
+    <br />
+    @Html.ActionLink("View Reports List", "List", "ReportView")
+</div>
+

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="AdventureWorks">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=PSYDUCK;Initial Catalog=AdventureWorks2014</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>5a64a2f1-0be5-4cba-831b-560709734e32</DataSourceID>
+</RptDataSource>
