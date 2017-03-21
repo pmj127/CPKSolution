@@ -270,27 +270,29 @@ namespace CPK_Project.Classes
         /// <param name="type">SelectListType</param>
         /// <returns>selectlist</returns>
         # region SelectList return
-        public static SelectList GetSelectList(SelectListType type)
+        public static SelectList GetSelectList(SelectListType type, string selectedValue = "")
         {
             List<SelectListItem> SelectListITems = new List<SelectListItem>();
             switch (type)
             {
 
                 case SelectListType.Waiting:
-                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "A" });
-                    SelectListITems.Add(new SelectListItem { Text = "Inactive", Value = "I" });
-                    SelectListITems.Add(new SelectListItem { Text = "Wating", Value = "W" });
+                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "Active" });
+                    SelectListITems.Add(new SelectListItem { Text = "Inactive", Value = "Inactive" });
+                    SelectListITems.Add(new SelectListItem { Text = "Wating", Value = "Wating" });
                     break;
                 case SelectListType.Inactive:
-                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "A" });
-                    SelectListITems.Add(new SelectListItem { Text = "Inactive", Value = "I" });
+                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "Active" });
+                    SelectListITems.Add(new SelectListItem { Text = "Inactive", Value = "Inactive" });
                     break;
                 case SelectListType.Active:
-                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "A" });
+                    SelectListITems.Add(new SelectListItem { Text = "Active", Value = "Active" });
                     break;
             }
-
-            return new SelectList(SelectListITems, "Value", "Text");
+            if (selectedValue=="")
+                return new SelectList(SelectListITems, "Value", "Text");
+            else
+                return new SelectList(SelectListITems, "Value", "Text", selectedValue);
         }
         
         public enum SelectListType

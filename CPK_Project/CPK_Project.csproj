@@ -288,6 +288,8 @@
     <Content Include="Views\ReportView\Index.cshtml" />
     <Content Include="Views\ReportView\List.cshtml" />
     <Content Include="Views\ReportView\Create.cshtml" />
+    <Content Include="Views\ReportView\Details.cshtml" />
+    <Content Include="Views\ReportView\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

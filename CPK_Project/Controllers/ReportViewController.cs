@@ -11,7 +11,7 @@ using System.Data;
 
 namespace CPK_Project.Controllers
 {
-    [AJaxAuthorize]
+  
     public class ReportViewController : Controller
     {
         public ActionResult Index(int reportID, int width, int height)
@@ -63,14 +63,27 @@ namespace CPK_Project.Controllers
 
         }
         // GET: ReportView/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult List()
         {
             return View();
         }
         // GET: ReportView/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int id)
-        {
-            return View();
+        { 
+
+            ReportAdmin reportAdmin = null;
+            using (DBManager db = new DBManager())
+            {
+                string procedureName = "CPK.uspReportDetail";
+                List<SqlParameter> paraList = new List<SqlParameter>();
+                paraList.Add(Common.GetParameter("ReportID", DbType.String, id, ParameterDirection.Input));
+
+                DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                reportAdmin = Common.DataToClass<ReportAdmin>(DbSet.Tables[0].Rows[0]);
+            }
+            return View(reportAdmin);
         }
 
         // GET: ReportView/Create
@@ -99,7 +112,7 @@ namespace CPK_Project.Controllers
                 using (DBManager db = new DBManager())
                 {
                     int result;
-                    string procedureName = "CPK.uspInsertReport";
+                    string procedureName = "CPK.uspReportInsert";
                     List<SqlParameter> paraList = new List<SqlParameter>();
                     paraList.Add(Common.GetParameter("ReportName", DbType.String, model.ReportName, ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("ReportPath", DbType.String, model.ReportPath, ParameterDirection.Input));
@@ -108,12 +121,15 @@ namespace CPK_Project.Controllers
 
                     result = db.GetExecuteNonQuery(paraList, procedureName);
                 }
-
+                TempData["message"] = "Successfully Created!";
+                TempData["messageType"] = "Success";
                 return RedirectToAction("List");
             }
             catch
             {
-                return View();
+                TempData["message"] = "Error occured while Creating!";
+                TempData["messageType"] = "Error";
+                return RedirectToAction("List");
             }
         }
 
@@ -121,44 +137,55 @@ namespace CPK_Project.Controllers
         // GET: ReportView/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ReportAdmin reportAdmin = null;
+            using (DBManager db = new DBManager())
+            {
+                string procedureName = "CPK.uspReportDetail";
+                List<SqlParameter> paraList = new List<SqlParameter>();
+                paraList.Add(Common.GetParameter("ReportID", DbType.String, id, ParameterDirection.Input));
+
+                DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                reportAdmin = Common.DataToClass<ReportAdmin>(DbSet.Tables[0].Rows[0]);
+            }
+            ViewBag.Status = Common.GetSelectList(Common.SelectListType.Inactive, reportAdmin.IsActive);
+            return View(reportAdmin);
         }
 
         // POST: ReportView/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        //public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ReportAdmin model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Status = Common.GetSelectList(Common.SelectListType.Inactive);
+                    return View(model);
+                }
+                using (DBManager db = new DBManager())
+                {
+                    int result;
+                    string procedureName = "CPK.uspReportUpdate";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("ReportID", DbType.String, model.ReportID, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("ReportName", DbType.String, model.ReportName, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("ReportPath", DbType.String, model.ReportPath, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("Description", DbType.String, model.Description, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("IsActive", DbType.String, model.IsActive, ParameterDirection.Input));
 
-                return RedirectToAction("Index");
+                    result = db.GetExecuteNonQuery(paraList, procedureName);
+
+                }
+                TempData["message"] = "Successfully Updated!";
+                TempData["messageType"] = "Success"; ViewBag.messageType = "Information";
+                return RedirectToAction("List");
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: ReportView/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ReportView/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
+                TempData["message"] = "Error occured while updating!";
+                TempData["messageType"] = "Error";
+                return RedirectToAction("List");
             }
         }
     }

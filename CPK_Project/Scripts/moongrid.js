@@ -13,6 +13,7 @@
             //orderColumn: null,
             //orderDesc: null,
             url: null,
+            sync: true,
             showPager: true,
             showSort: true,
             showSearcher: true,
@@ -23,7 +24,7 @@
             dataType: "json",
             method: "POST",
             url: settings.url,
-            async: true,
+            async: settings.sync,
             timeout: 30000,
             data: {
                 "pageNo": settings.pageNo, "pageSize": settings.pageSize, "searchText": null,

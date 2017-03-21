@@ -1,0 +1,68 @@
+﻿@model CPK_Project.Models.ReportAdmin
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div style="font-size:16px;">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifyDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifyDate)
+        </dd>
+
+    </dl>
+</div>
+<div style="text-align:center">
+    @Html.ActionLink("Edit", "Edit", new { id =  Model.ReportID }, new {@class="btn btn-primary" })
+    @Html.ActionLink("Back to List", "List", null, new { @class = "btn btn-success" })
+</div>
+
+
