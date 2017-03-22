@@ -290,6 +290,7 @@
     <Content Include="Views\ReportView\Create.cshtml" />
     <Content Include="Views\ReportView\Details.cshtml" />
     <Content Include="Views\ReportView\Edit.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
