@@ -202,6 +202,22 @@ namespace CPK_DAL
             //    iResult = Convert.ToInt32(cmd.Parameters["@SQL_OUTPUT"].Value.ToString());
             return iResult;
         }
+
+        /// <summary>
+        ///  Query for insert, update, delete, merge with stored procedure with output parameter
+        /// </summary>
+        /// <param name="parameters">parameter array</param>
+        /// <param name="spName">stored procedure name</param>
+        /// <param name="outParameterName">out put parameter name</param>
+        /// <returns>string output parameter value</returns>
+        public string GetExecuteNonQuery(List<SqlParameter> parameters, string spName, string outParameterName)
+        {
+            int iResult = 0;
+            SetCommand(spName, CommandType.StoredProcedure);
+            cmd.Parameters.AddRange(parameters.ToArray());
+            iResult = cmd.ExecuteNonQuery();
+            return cmd.Parameters["@" + outParameterName].Value.ToString();
+        }
         /// <summary>
         /// Query for insert, update, delete, merge with sql query text
         /// </summary>

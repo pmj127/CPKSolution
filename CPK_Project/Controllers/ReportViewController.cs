@@ -14,31 +14,48 @@ namespace CPK_Project.Controllers
   
     public class ReportViewController : Controller
     {
+        [Authorize]
         public ActionResult Index(int reportID, int width = 100, int height = 650)
         {
-            var reporstView = new ReportsView
-            {
-                ReportID = reportID,
-                Width = width,
-                Height = height,
-                ViewerURL = String.Format("/ReportsView/ReportsViewer.aspx?ReportID={0}&Height={1}", reportID, height)
-            };
-            try
+            int countGroup = 0;
+            if(!User.IsInRole("Admin"))
             {
                 using (DBManager db = new DBManager())
                 {
-                    string procedureName = "CPK.uspReportViewLogInsert";
+                    string procedureName = "CPK.uspCheckReportAuthority";
                     List<SqlParameter> paraList = new List<SqlParameter>();
+
                     paraList.Add(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(reportID), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name, ParameterDirection.Input));
-
-                    int result = db.GetExecuteNonQuery(paraList, procedureName);
+                    paraList.Add(Common.GetParameter("GroupCount", DbType.String, User.Identity.Name, ParameterDirection.Output));
+                    int result = Int16.Parse(db.GetExecuteNonQuery(paraList, procedureName, "GroupCount"));
                 }
             }
-            catch (Exception ex){
-
+            else
+            {
+                countGroup = 1;
             }
-            return View(reporstView);
+            
+            if (countGroup > 0)
+            {
+                var reporstView = new ReportsView
+                {
+                    ReportID = reportID,
+                    Width = width,
+                    Height = height,
+                    ViewerURL = String.Format("/ReportsView/ReportsViewer.aspx?ReportID={0}&Height={1}", reportID, height)
+                };
+
+                return View(reporstView);
+            }
+            else // when user does not have authority for reportID
+            {
+                TempData["message"] = "You do not have an authority for the report!";
+                TempData["messageType"] = "Error";
+                TempData["ActionName"] = "List";
+                return RedirectToAction(TempData["ActionName"].ToString(), TempData["ControllerName"].ToString());
+            }
+
         }
 
         [HttpPost]
