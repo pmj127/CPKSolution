@@ -52,8 +52,8 @@ namespace CPK_Project.Controllers
             {
                 TempData["message"] = "You do not have an authority for the report!";
                 TempData["messageType"] = "Error";
-                TempData["ActionName"] = "List";
-                return RedirectToAction(TempData["ActionName"].ToString(), TempData["ControllerName"].ToString());
+                return Redirect(Request.UrlReferrer.ToString());
+                //return RedirectToAction(TempData["ActionName"].ToString(), TempData["ControllerName"].ToString());
             }
 
         }
@@ -98,8 +98,8 @@ namespace CPK_Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult List()
         {
-            TempData["ActionName"] = "List";
-            TempData["ControllerName"] = "ReportView";
+            //TempData["ActionName"] = "List";
+            //TempData["ControllerName"] = "ReportView";
             return View();
         }
         // GET: ReportView/Details/5
