@@ -8,10 +8,10 @@
         var settings = $.extend({
             pageNo: 1,
             pageSize: 10,
-            //searchText: null,
+            searchText: null,
             //isActive: null,
-            //orderColumn: null,
-            //orderDesc: null,
+            orderColumn: null,
+            orderDesc: null,
             url: null,
             sync: true,
             showPager: true,

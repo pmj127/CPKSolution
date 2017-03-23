@@ -2,4 +2,12 @@
 @{
     ViewBag.Title = "Report Viewer";
 }
+
+<div style="">
+    <div style="display:inline-block;">
+        <h2>Report View</h2>
+    </div>
+    <div style="margin:20px 20px 0px 20px;float:right">@Html.ActionLink("Back to List", TempData["ActionName"].ToString() , TempData["ControllerName"].ToString(), null, new { @class = "btn btn-info" })</div>
+</div>
+
 <iframe id="frmReport" src="@Model.ViewerURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="no"></iframe>

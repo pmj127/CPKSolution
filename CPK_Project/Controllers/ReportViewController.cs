@@ -14,15 +14,30 @@ namespace CPK_Project.Controllers
   
     public class ReportViewController : Controller
     {
-        public ActionResult Index(int reportID, int width, int height)
+        public ActionResult Index(int reportID, int width = 100, int height = 650)
         {
             var reporstView = new ReportsView
             {
                 ReportID = reportID,
                 Width = width,
                 Height = height,
-                ViewerURL = String.Format("ReportsView/ReportsViewer.aspx?ReportID={0}&Height={1}", reportID, height)
+                ViewerURL = String.Format("/ReportsView/ReportsViewer.aspx?ReportID={0}&Height={1}", reportID, height)
             };
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+                    string procedureName = "CPK.uspReportViewLogInsert";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(reportID), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name, ParameterDirection.Input));
+
+                    int result = db.GetExecuteNonQuery(paraList, procedureName);
+                }
+            }
+            catch (Exception ex){
+
+            }
             return View(reporstView);
         }
 
@@ -66,6 +81,8 @@ namespace CPK_Project.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult List()
         {
+            TempData["ActionName"] = "List";
+            TempData["ControllerName"] = "ReportView";
             return View();
         }
         // GET: ReportView/Details/5

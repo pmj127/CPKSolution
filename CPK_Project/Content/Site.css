@@ -17,21 +17,52 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
+
+html,body {height:100%;}
+.navbar {
+        margin-bottom: 0;
+        background-color: #f4511e;
+        z-index: 9999;
+        border: 0;
+        font-size: 12px !important;
+        line-height: 1.42857143 !important;
+        letter-spacing: 4px;
+        border-radius: 0;
+    }
+    .navbar li a, .navbar .navbar-brand {
+        color: #fff !important;
+    }
+    .navbar-nav li a:hover, .navbar-nav li.active a {
+        color: #f4511e !important;
+        background-color: #fff !important;
+    }
+    .navbar-default .navbar-toggle {
+        border-color: transparent;
+        color: #fff !important;
+    }
+    .navbar-fixed-bottom{
+        background-color: #f4511e;
+        color: #fff !important;     
+        line-height: 20px;
+    }
+    .navbar-fixed-bottom p{
+        margin: 10px; 
+    }
+    .jumbotron {
+        background-color: #f4511e;
+        color: #fff;
+        padding: 100px 25px;
+    }
+    .container-fluid {
+        padding: 20px 30px;
+    }
+    textarea.form-control {
+        margin-bottom: 5px;
+    }
 
 
-/*moonGrid*/
-.sorticoncolor{
-    color: red;
-}
-.table th {
-    text-align:center;
-}
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr:hover > th {
-  background-color: #fcf8e3;
-}

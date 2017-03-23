@@ -19,7 +19,7 @@ namespace CPK_Project.Models
     {
         [Required]
         [Display(Name = "ID")]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 5)]
+        [StringLength(30, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 5)]
         public string UserID { get; set; }
         [Required]
         [Display(Name ="Full Name")]
@@ -53,7 +53,7 @@ namespace CPK_Project.Models
     public class UserRegisterModel : UserInfoModel
     {
         [Required]
-        [StringLength(30, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(30, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 6)]
         [Display(Name ="Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

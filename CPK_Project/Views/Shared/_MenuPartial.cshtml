@@ -2,7 +2,7 @@
 @if (Request.IsAuthenticated)
 {
     <ul class="nav navbar-nav">
-        @if (this.User.IsInRole("Admin"))
+        @if (User.IsInRole("Admin"))
         {
             <li>@Html.ActionLink("User", "Index", "Account")</li>
                         <li>@Html.ActionLink("Reports", "List", "ReportView")</li>

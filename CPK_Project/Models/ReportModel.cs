@@ -10,7 +10,7 @@ namespace CPK_Project.Models
         public int ReportID { get; set; }
         [Required]
         [Display(Name = "Report Name")]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 3)]
         public string ReportName { get; set; }
 
         [Display(Name = "Description")]
@@ -19,7 +19,7 @@ namespace CPK_Project.Models
         public string Description { get; set; }
         [Required]
         [Display(Name = "Report Path")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(100, ErrorMessage = "The {0} must be between {2} and {1} characters long.", MinimumLength = 3)]
         public string ReportPath { get; set; }
 
     }
@@ -28,6 +28,7 @@ namespace CPK_Project.Models
     {
         public int? Width { get; set; }
         public int? Height { get; set; }
+
         [Required]
         public string ViewerURL { get; set; }
     }

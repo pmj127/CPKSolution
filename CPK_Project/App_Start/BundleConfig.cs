@@ -30,7 +30,11 @@ namespace CPK_Project
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/moonGrid").Include(
-                        "~/Scripts/moonGrid.js"));
+                    "~/Scripts/moonGrid.js"));
+
+            bundles.Add(new StyleBundle("~/Content/moonGrid").Include(
+                        "~/Content/moonGrid.css"));
+
         }
     }
 }

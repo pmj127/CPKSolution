@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>Reports List</h2>
+<hr />
 <div style="padding-bottom:5px;text-align:right">
     @Html.ActionLink("Upload Report", "Create", "ReportView", null,new { @class = "btn btn-info" })
 </div>
@@ -47,6 +48,9 @@ else if (String.Equals(TempData["messageType"],"Error"))
         $("#grid").moonGrid({
             pageNo: 1,
             pageSize: 10,
+            searchText: null,
+            orderColumn: null,
+            orderDesc: null,
             url: "/ReportView/GetList",
             sync: true,
             showPager: true,
@@ -65,10 +69,13 @@ else if (String.Equals(TempData["messageType"],"Error"))
     function grid_checkbox_click(event) {
         //event.data.row has all row information such as ReportID, ReportName, and so on
         //alert(event.data.row.ReportID);
+        window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
     }
 
 
-</script>
+</script>\
+
 @section Scripts {
+    @Styles.Render("~/Content/moonGrid")
     @Scripts.Render("~/bundles/moonGrid")
 }
