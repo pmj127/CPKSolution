@@ -49,6 +49,18 @@ namespace CPK_Project.Models
         public string Account { get; set; }
         public string Status { get; set; }
     }
+    public class UserRegisterInfo
+    {
+        public string UserID { get; set; }
+        public string Password { get; set; }
+        public string FullName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string UserRole { get; set; }
+        public string UserType { get; set; }
+        public string Account { get; set; }
+        public string Status { get; set; }
+    }
 
     public class UserRegisterModel : UserInfoModel
     {
