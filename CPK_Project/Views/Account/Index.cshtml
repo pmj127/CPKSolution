@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Manager User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+
+    @if (String.Equals(TempData["messageType"], "Success"))
+    {
+        <div class="alert alert-success alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>@TempData["messageType"]</strong> @TempData["message"]
+        </div>
+    }
+    else if (String.Equals(TempData["messageType"], "Error"))
+    {
+        <div class="alert alert-danger alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>@TempData["messageType"]</strong> @TempData["message"]
+        </div>
+    }
+
+    <div id="grid" style="min-width:600px;">
+        <div>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th data-column="UserID" data-sort="true" data-align="center">ID</th>
+                        <th data-column="FullName" data-sort="true" data-search="true" data-action="grid_click">Full Name</th>
+                        <th data-column="Status">Status</th>
+                        <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+
+        $(function () {
+            $("#grid").moonGrid({
+                pageNo: 1,
+                pageSize: 10,
+                searchText: null,
+                orderColumn: null,
+                orderDesc: null,
+                url: "/Account/GetList",
+                sync: true,
+                showPager: true,
+                showSort: false,
+                showSearcher: true,
+                showModal: false
+            });
+        });
+
+        function grid_click(event)
+        {
+            //event.data.row has all row information such as ReportID, ReportName, and so on
+            //alert(event.data.row.ReportID);
+            window.location.href = "/ReportView/Details?id=" + event.data.row.ReportID;
+        }
+        function grid_checkbox_click(event) {
+            //event.data.row has all row information such as ReportID, ReportName, and so on
+            //alert(event.data.row.ReportID);
+            window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
+        }
+
+
+    </script>\
+
+    @section Scripts {
+        @Styles.Render("~/Content/moonGrid")
+        @Scripts.Render("~/bundles/moonGrid")
+    }

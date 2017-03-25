@@ -22,6 +22,8 @@ namespace CPK_Project.Controllers
     public class AccountController : Controller
     {
 
+
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -43,7 +45,7 @@ namespace CPK_Project.Controllers
             {
                 try
                 {
-                    using ( DBManager db = new DBManager())
+                    using (DBManager db = new DBManager())
                     {
                         UserInfoModel userInfo = new UserInfoModel();
                         model.Password = Common.Encrypt(model.Password);
@@ -61,7 +63,7 @@ namespace CPK_Project.Controllers
                                    , userInfo.UserRole + "|" + userInfo.UserType, FormsAuthentication.FormsCookiePath);
                         string encTicket = FormsAuthentication.Encrypt(ticket);
                         Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-              
+
                         //Session["User"] = userInfo;
 
                         if (!String.IsNullOrEmpty(returnUrl))
@@ -85,7 +87,7 @@ namespace CPK_Project.Controllers
             return View(model);
         }
 
-       
+
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -99,16 +101,44 @@ namespace CPK_Project.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(UserRegisterModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+                        model.Password = Common.Encrypt(model.Password);
+                        List<SqlParameter> paraList = Common.ListToParameter<UserRegisterInfo>(
+                            new UserRegisterInfo
+                            {
+                                Account = model.Account,
+                                Email = model.Email,
+                                FullName = model.FullName,
+                                Password = model.Password,
+                                Phone = model.Phone,
+                                Status = model.Status,
+                                UserID = model.UserID,
+                                UserRole = model.UserRole,
+                                UserType = model.UserType
+                            });
+                        db.GetExecuteNonQuery(paraList, "CPK.uspRegister");
+
+                        return RedirectToAction("index", "home");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
                 //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 //var result = await UserManager.CreateAsync(user, model.Password);
                 //if (result.Succeeded)
                 //{
                 //    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                 //    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 //    // Send an email with this link
                 //    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -119,7 +149,6 @@ namespace CPK_Project.Controllers
                 //}
                 //AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -135,6 +164,38 @@ namespace CPK_Project.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-     
+        [Authorize(Roles = "Admin")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public JsonResult GetList(int pageNo, int pageSize, string searchText, string isActive, string orderColumn, string orderDesc)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+                    string nameOfProcedure = "CPK.uspUserList";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("FullName", DbType.String, searchText, ParameterDirection.Input));
+                    DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
+                    ListViewModel<UserListViewModel> listView = Common.DataToClass<ListViewModel<UserListViewModel>>(DbSet.Tables[0].Rows[0]);
+                    List<UserListViewModel> userList = Common.DataToList<UserListViewModel>(DbSet.Tables[1]);
+                    listView.Rows = userList;
+                    return Json(listView, JsonRequestBehavior.DenyGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+        
+        }
     }
 }
