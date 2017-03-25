@@ -9,7 +9,7 @@
             pageNo: 1,
             pageSize: 10,
             searchText: null,
-            //isActive: null,
+            filterText: null,
             orderColumn: null,
             orderDesc: null,
             url: null,
@@ -27,17 +27,18 @@
             async: settings.sync,
             timeout: 30000,
             data: {
-                "pageNo": settings.pageNo, "pageSize": settings.pageSize, "searchText": null,
-                "isActive": null, "orderColumn": null, "orderDesc": null
+                "pageNo": settings.pageNo, "pageSize": settings.pageSize, "searchText": settings.searchText,
+                "filterText": settings.filterText, "orderColumn": settings.orderColumn, "orderDesc": settings.orderDesc
             },
             success: function (data, status, jqXHR) {
                 if (data.ErrorMessage != null) {
                     modalMessage("Error", data.ErrorMessage, true);
+                    modalShow(true, true);
                     return;
                 }
                 //draw grid
                 Grid.show(data);
-                modalShow(false);
+                modalShow(false, settings.showModal);
             },
             error: function (xhr, status, errorThrown) {
                 if (xhr.status == 403) {
@@ -61,24 +62,29 @@
                             break;
                     }
                     modalMessage("Error", errText, true);
+                    modalShow(true, true);
                 }
             }
 
         }
         function modalMessage( title, body, footer)
         {
-            if (settings.showModal){
-                if(footer)
-                    $('#' + gridID + 'Modal .modal-footer').show();
-                else
-                    $('#' + gridID + 'Modal .modal-footer').hide();
-                $('#' + gridID + 'Modal .modal-title').text(title);
-                $('#' + gridID + 'Modal .modal-body > p').text(body);
-            }
+            if(footer)
+                $('#' + gridID + 'Modal .modal-footer').show();
+            else
+                $('#' + gridID + 'Modal .modal-footer').hide();
+
+            $('#' + gridID + 'Modal .modal-title').text(title);
+            var modalbody =$('#' + gridID + 'Modal .modal-body');
+            modalbody.children().remove();
+            if (body == "")
+                modalbody.append('<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span class="sr-only">Please wait for a while...</span></div></div>');
+            else 
+                modalbody.append('<p>'+ body + '</p>');
         }
-        function modalShow(status)
+        function modalShow(status, using)
         {
-            if (settings.showModal) {
+            if (using) {
                 if (status)
                     $('#' + gridID + 'Modal').modal({ show: true, backdrop: 'static', keyboard: false });
                 else
@@ -93,8 +99,8 @@
                 var table = $("#" + gridID + " > div > table > tbody");
                 table.children().remove();
                 if (jsonData.TotalRows == "0") {
-                    var columnLength = $("#" + gridID + " > thead > tr > th").length;
-                    table.append("<tr rowspan='" + columnLength + "'><td> No Data...</td></tr>");
+                    var columnLength = $("#" + gridID + " > div > table > thead > tr > th").length;
+                    table.append("<tr><td colspan='" + columnLength + "'> No Data...</td></tr>");
                 }
                 else {
                     var columns = $("#" + gridID + " > div > table > thead > tr > th");
@@ -194,6 +200,19 @@
                 $("#" + gridID + " > div > table > thead > tr > th[data-sort]").each(function () {
                     $(this).append('<a href="#" data-sortdirect="DESC"><span class="glyphicon glyphicon-arrow-down" style="font-size:.6em;" /></a>');
                     $(this).append('<a href="#" data-sortdirect="ASC"><span class="glyphicon glyphicon-arrow-up" style="font-size:.6em;" /></a>');
+                    if ($(this).data("column") == settings.orderColumn)
+                    {
+                        switch(settings.orderDesc)
+                        {
+                            case "DESC" :
+                                $(this).children("a:nth-child(1)").children().addClass("sorticoncolor");
+                                break;
+                            case "ASC" :
+                                $(this).children("a:nth-child(1)").children().addClass("sorticoncolor");
+                                break;
+                        }
+                    }
+
                     $(this).children().on("click", function () {
                         ajaxSetting.data.orderColumn = $(this).parent().data("column");
                         ajaxSetting.data.orderDesc = $(this).data("sortdirect");
@@ -209,6 +228,7 @@
                 if (columnName != "") {
                     $("#" + gridID + " > div:nth-child(1)").first().append('<div class="input-group" style="width:300px;float:right"><span class="input-group-addon">Text</span><input type="text" class="form-control" name="msg" placeholder="search word"><div class="input-group-btn"><button class="btn btn-info" type="button"><i class="glyphicon glyphicon-search"></i></button></div></div>');
                     $("#" + gridID + " > div:nth-child(1) > div:nth-child(2) > span").text(columnName);
+                    $("#" + gridID + " > div:nth-child(1) > div:nth-child(2) > input").val(settings.searchText);
                     $("#" + gridID + " > div:nth-child(1) > div:nth-child(2) > div > button").on("click", function () {
                         ajaxSetting.data.searchText = $("#" + gridID + " > div:nth-child(1) > div:nth-child(2) > input").val();
                         ajaxSetting.data.pageNo = 1;
@@ -230,8 +250,8 @@
  
             },
             ajax: function () {
-                modalMessage("Information", "Please wait for a while", false);
-                modalShow(true);
+                modalMessage("Loading", "", false);
+                modalShow(true, settings.showModal);
                 $.ajax(ajaxSetting);
             }
         }
@@ -240,8 +260,10 @@
             gridID = $(this).prop("id");
             $(this).prepend('<div style="padding-bottom:2px;"></div>');
             $(this).append('<div align="center" ></div>');
-            $(this).append('<div class="modal" id="' + gridID + 'Modal" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div><div class="modal-body"><p></p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div></div>');
-
+            $(this).append('<div class="modal" id="' + gridID + 'Modal" role="dialog" style="padding-top: 20%;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-secondary" id="btn'+gridID+'Modal">Close</button></div></div></div></div>');
+            $("#btn" + gridID + "Modal").on("click", function () {
+                modalShow(false, true);
+            });
             if (!settings.showPager){
                 $(this).children("div:nth-child(3)")
             }

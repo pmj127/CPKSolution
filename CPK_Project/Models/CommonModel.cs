@@ -23,4 +23,20 @@ namespace CPK_Project.Models
         public string ErrorMessage { get; set; }
     }
 
+    public class ReportGroup
+    {
+        [Required]
+        public int GroupID { get; set; }
+        [Required]
+        public int ReportID { get; set; }
+    }
+
+    public class UserGroup
+    {
+        [Required]
+        public int GroupID { get; set; }
+        [Required]
+        public int UserID { get; set; }
+    }
+
 }

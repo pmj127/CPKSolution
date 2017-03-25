@@ -60,7 +60,7 @@ namespace CPK_Project.Controllers
 
         [HttpPost]
         [AJaxAuthorize(Roles = "Admin")]
-        public JsonResult GetList(int pageNo, int pageSize, string searchText, string isActive, string orderColumn, string orderDesc)
+        public JsonResult GetList(int pageNo, int pageSize, string searchText, string filterText, string orderColumn, string orderDesc)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
-                    paraList.Add(Common.GetParameter("IsActive", DbType.String, isActive, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("IsActive", DbType.String, filterText, ParameterDirection.Input));
                     if(orderColumn != null && orderColumn.Length != 0)
                     {
                         paraList.Add(Common.GetParameter("Sort", DbType.String, orderColumn+ orderDesc, ParameterDirection.Input));
@@ -121,6 +121,7 @@ namespace CPK_Project.Controllers
         }
 
         // GET: ReportView/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.Status = Common.GetSelectList(Common.SelectListType.Inactive);
@@ -169,6 +170,7 @@ namespace CPK_Project.Controllers
 
 
         // GET: ReportView/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             ReportAdmin reportAdmin = null;
@@ -187,6 +189,7 @@ namespace CPK_Project.Controllers
 
         // POST: ReportView/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         //public ActionResult Edit(int id, FormCollection collection)
         public ActionResult Edit(ReportAdmin model)
         {
