@@ -5,8 +5,8 @@
         @if (User.IsInRole("Admin"))
         {
             <li>@Html.ActionLink("User", "Index", "Account")</li>
-                        <li>@Html.ActionLink("Reports", "List", "ReportView")</li>
-                        <li>@Html.ActionLink("Group", "Index", "Group")</li>
+            <li>@Html.ActionLink("Reports", "List", "ReportView")</li>
+            <li>@Html.ActionLink("Group", "Index", "Group")</li>
         }
         else
         {
