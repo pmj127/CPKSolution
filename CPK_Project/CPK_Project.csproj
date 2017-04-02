@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Classes\AttributeFilters.cs" />
+    <Compile Include="Classes\AccountHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Controllers\CommonController.cs" />
@@ -295,6 +296,7 @@
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_ReportListPartial.cshtml" />
+    <Content Include="Views\Account\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

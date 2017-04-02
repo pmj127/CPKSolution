@@ -1,0 +1,97 @@
+﻿@model CPK_Project.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "User Info";
+}
+
+<h2>@ViewBag.Title</h2>
+<p>@ViewBag.Message</p>
+@using (Html.BeginForm("UserInfo", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="well">
+        @Html.ValidationSummary(true,"",new { @class = "danger" })
+        
+        <div class="form-group row">
+            @Html.LabelFor(m => m.UserID, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Password, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.FullName, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Email, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Phone, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.UserRole, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.DropDownListFor(m => m.UserRole, new List<SelectListItem>
+           {
+               new SelectListItem { Text = "Admin", Value ="Admin" },
+               new SelectListItem { Text = "User", Value ="User" }
+
+           }, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.UserType, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.UserType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Account, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.TextBoxFor(m => m.Account, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Account, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Status, new { @class = "col-2 col-form-label" })
+            <div class="col-10">
+                @Html.DropDownListFor(m => m.Status, new List<SelectListItem>
+           {
+               new SelectListItem { Text = "Active", Value ="Active" },
+               new SelectListItem { Text = "Waiting", Value ="Waiting" }
+
+           }, new { @class = "form-control" })
+            </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-warning" name="trigger" value="reset">Reset Password</button>
+        <button type="submit" class="btn btn-lg btn-info" name="trigger" value="save">Save</button>
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-lg btn-default" })
+    </div>
+}
