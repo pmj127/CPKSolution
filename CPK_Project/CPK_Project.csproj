@@ -297,6 +297,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Shared\_ReportListPartial.cshtml" />
     <Content Include="Views\Account\UserInfo.cshtml" />
+    <Content Include="Views\Shared\_UserListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
