@@ -1,22 +1,45 @@
 ﻿<!-- Button trigger modal -->
-<button type="button" id="btnReportsModal" class="btn btn-primary btn-lg" data-toggle="modal" 
-        data-target="#ReportsModal" data-backdrop="static" data-keyboard="false" 
-        data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList">
-    Show Report List
+<button type="button" id="btnUsersModal" class="btn btn-primary btn-lg" data-toggle="modal"
+        data-target="#UsersModal" data-backdrop="static" data-keyboard="false"
+        data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList">
+    Show User List
 </button>
 <script type="text/javascript">
+    var groupID = 1;
 
-    function GetReportGroupList(){
+    ///moongrid modal
+    function modalMessage(gridID,title, body, footer) {
+        if (footer)
+            $('#' + gridID + 'Modal .modal-footer').show();
+        else
+            $('#' + gridID + 'Modal .modal-footer').hide();
+
+        $('#' + gridID + 'Modal .modal-title').text(title);
+        var modalbody = $('#' + gridID + 'Modal .modal-body');
+        modalbody.children().remove();
+        if (body == "")
+            modalbody.append('<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span class="sr-only">Please wait for a while...</span></div></div>');
+        else
+            modalbody.append('<p>' + body + '</p>');
+    }
+    function modalShow(gridID, status) {
+        if (status)
+            $('#' + gridID + 'Modal').modal({ show: true, backdrop: 'static', keyboard: false });
+        else
+            $('#' + gridID + 'Modal').modal('hide');
+    }
+
+    function GetUserGroupList() {
         //alert("close");
     }
 
-    var SetReportGroup = function (event) {
+    var SetUserGroup = function (event) {
         var gridID = event.data.id;
 
         var list = $("#" + gridID + " input[name=" + gridID + "checkbox]:checked");
         if (list.length == 0)
         {
-            modalMessage(gridID, "Warning", "You must select at least one report!", true);
+            modalMessage(gridID, "Warning", "You must select at least one user!", true);
             modalShow(gridID, true);
             return;
         }
@@ -30,7 +53,7 @@
         list.each(function () {
             jsonData.push({
                 GroupID: groupID,
-                ReportID: $(this).data("value")
+                UserID: $(this).data("value")
             })
         });
         //alert(JSON.stringify(jsonData));
@@ -40,7 +63,7 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             method: "POST",
-            url: "@Url.Action("SetReportGroup", "Common")",
+            url: "@Url.Action("SetUserGroup", "Common")",
             async: true,
             timeout: 30000,
             data: JSON.stringify(jsonData),
@@ -50,7 +73,7 @@
                     modalShow(gridID, true);
                     return;
                 }
-                modalMessage(gridID, "Success", "Successfully, reports were inserted in the group!", true);
+                modalMessage(gridID, "Success", "Successfully, Users were inserted in the group!", true);
                 $("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
             },
             error: function (xhr, status, errorThrown) {
@@ -82,24 +105,24 @@
     }
 </script>
 
-<!-- report list for selecting -->
-<div class="modal fade" id="ReportsModal" tabindex="-1" role="dialog" aria-labelledby="ReportListLabel" style="padding-top: 5%;">
+<!-- user list for selecting -->
+<div class="modal fade" id="UsersModal" tabindex="-1" role="dialog" aria-labelledby="UsertListLabel" style="padding-top: 5%;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" id="btnReportCloseTopModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="ReportListLabel">Select Reports</h4>
+                <button type="button" class="close" data-dismiss="modal" id="btnUserCloseTopModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="UserListLabel">Select Reports</h4>
             </div>
             <div class="modal-body">
-                <div id="ReportList">
+                <div id="UserList">
                     <div>
                         <table class="table table-striped table-bordered table-condensed table-hover">
                             <thead>
                                 <tr>
-                                    <th data-input-type="checkbox" data-input-value="ReportID" ></th>
-                                    <th data-column="ReportID" data-sort="true" data-align="center">User ID</th>
-                                    <th data-column="ReportName" data-sort="true" data-search="true">User Name</th>
-                                    <th data-column="ReportPath">Report Path</th>
+                                    <th data-input-type="checkbox" data-input-value="UserID"></th>
+                                    <th data-column="UserID" data-sort="true" data-align="center">User ID</th>
+                                    <th data-column="FullName" data-sort="true" data-search="true">User Name</th>
+                                    <th data-column="Account">Account</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -108,22 +131,22 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btnReportSelectModal">select</button>
-                <button type="button" class="btn btn-info" id="btnReportCloseModal" data-dismiss="modal">Close</button>    
+                <button type="button" class="btn btn-danger" id="btnUserSelectModal">select</button>
+                <button type="button" class="btn btn-info" id="btnUserCloseModal" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
- 
-    $("#btnReportsModal").on("click", function () {
-        if ($("#ReportListModal").length == 0)
+
+    $("#btnUsersModal").on("click", function () {
+        if ($("#UserListModal").length == 0)
         {
-            $("#ReportList").moonGrid({
+            $("#UserList").moonGrid({
                 pageNo: 1,
                 pageSize: 10,
                 filterText: "Active",
-                url: "/ReportView/GetList",
+                url: "/Account/GetList",
                 sync: true,
                 showPager: true,
                 showSort: true,
@@ -132,10 +155,11 @@
             });
             var fnselect = $(this).data('fnselect');
             var fnclose = $(this).data('fnclose');
+            
             if (fnselect.length > 0)
-                $("#btnReportSelectModal").on("click", { id: "ReportList" }, eval(fnselect));
+                $("#btnUserSelectModal").on("click",  {id: "UserList" }, eval(fnselect));
             if (fnclose.length > 0)
-            $("#btnReportCloseModal, #btnReportCloseTopModal").on("click", eval(fnclose));
+                $("#btnUserCloseModal, #btnUserCloseTopModal").on("click", eval(fnclose));
 
         }
     });

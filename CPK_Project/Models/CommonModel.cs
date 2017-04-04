@@ -36,7 +36,7 @@ namespace CPK_Project.Models
         [Required]
         public int GroupID { get; set; }
         [Required]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
     }
 
 }

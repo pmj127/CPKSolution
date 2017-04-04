@@ -26,10 +26,12 @@
             <table class="table table-striped table-bordered table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th data-column="UserID" data-sort="true" data-align="center">ID</th>
-                        <th data-column="FullName" data-sort="true" data-search="true" data-action="grid_click">Full Name</th>
-                        <th data-column="Status">Status</th>
-                        <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
+                        <th data-column="UserID">UserID</th>
+                        <th data-column="UserType" data-sort="true" data-align="center" data-action="grid_click">Type</th>
+                        <th data-column="FullName" data-sort="true" data-search="true" data-action="grid_click">Name</th>
+                        <th data-column="Account" data-sort="true" data-action="grid_click">Account ID</th>
+                        <th data-column="Status" data-sort="true" data-action="grid_click">Status</th>
+                        <th data-column="ModifyDate" data-sort="true" data-align="center" data-action="grid_click">Modify Date</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -39,7 +41,7 @@
 
     <script type="text/javascript">
 
-
+    
         $(function () {
             $("#grid").moonGrid({
                 pageNo: 1,
@@ -47,10 +49,10 @@
                 searchText: null,
                 orderColumn: null,
                 orderDesc: null,
-                url: "/Account/GetList",
+                url: "@Url.Action("GetList", "Account")",
                 sync: true,
                 showPager: true,
-                showSort: false,
+                showSort: true,
                 showSearcher: true,
                 showModal: false
             });
@@ -58,18 +60,9 @@
 
         function grid_click(event)
         {
-            //event.data.row has all row information such as ReportID, ReportName, and so on
-            //alert(event.data.row.ReportID);
-            window.location.href = "/ReportView/Details?id=" + event.data.row.ReportID;
+                window.location.href = "/Account/UserInfo?id=" + event.data.row.UserID;
         }
-        function grid_checkbox_click(event) {
-            //event.data.row has all row information such as ReportID, ReportName, and so on
-            //alert(event.data.row.ReportID);
-            window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
-        }
-
-
-    </script>\
+    </script>
 
     @section Scripts {
         @Styles.Render("~/Content/moonGrid")

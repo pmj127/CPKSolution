@@ -110,19 +110,8 @@ namespace CPK_Project.Controllers
                     using (DBManager db = new DBManager())
                     {
                         model.Password = Common.Encrypt(model.Password);
-                        List<SqlParameter> paraList = Common.ListToParameter<UserRegisterInfo>(
-                            new UserRegisterInfo
-                            {
-                                Account = model.Account,
-                                Email = model.Email,
-                                FullName = model.FullName,
-                                Password = model.Password,
-                                Phone = model.Phone,
-                                Status = model.Status,
-                                UserID = model.UserID,
-                                UserRole = model.UserRole,
-                                UserType = model.UserType
-                            });
+                        List<SqlParameter> paraList = Common.ListToParameter<UserRegisterInfo>
+                            (AccountHelper.getUserRegisterInfo(model));
                         db.GetExecuteNonQuery(paraList, "CPK.uspRegister");
 
                         return RedirectToAction("index", "home");
@@ -172,7 +161,7 @@ namespace CPK_Project.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public JsonResult GetList(int pageNo, int pageSize, string searchText, string isActive, string orderColumn, string orderDesc)
+        public JsonResult GetList(int pageNo, int pageSize, string searchText, string userID, string orderColumn, string orderDesc)
         {
             try
             {
@@ -183,6 +172,13 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("FullName", DbType.String, searchText, ParameterDirection.Input));
+
+                    if (!AccountHelper.isEmpty(orderColumn))
+                    {
+                        paraList.Add(Common.GetParameter("Sort", DbType.String, orderColumn + orderDesc, ParameterDirection.Input));
+                        nameOfProcedure = "CPK.uspUserListSort";
+                    }
+
                     DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
                     ListViewModel<UserListViewModel> listView = Common.DataToClass<ListViewModel<UserListViewModel>>(DbSet.Tables[0].Rows[0]);
                     List<UserListViewModel> userList = Common.DataToList<UserListViewModel>(DbSet.Tables[1]);
@@ -195,7 +191,99 @@ namespace CPK_Project.Controllers
                 JsonError e = new JsonError(ex.Message);
                 return Json(e, JsonRequestBehavior.DenyGet);
             }
-        
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult UserInfo(string id)
+        {
+            string message;
+            RegisterViewModel model;
+
+            if (AccountHelper.isEmpty(id))
+            {
+                return RedirectToAction("Index");
+            }
+
+            using (DBManager db = new DBManager())
+            {
+                DataRowCollection rows = AccountHelper.getUserRowByID(db, id);
+
+                if (rows.Count == 0)
+                {
+                    message = "User is not found";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    model = AccountHelper.getRegisterViewModel(rows[0]);
+                    model.Password = Common.Decrypt(model.Password);
+                }
+            }
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserInfo(RegisterViewModel model, string trigger)
+        {
+
+            if (model == null) return RedirectToAction("Index");
+
+            ActionResult returnPage = View(model);
+            if ("reset".Equals(trigger))
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+                        DataRowCollection rows = AccountHelper.getUserRowByID(db, model.UserID);
+                        model = AccountHelper.getRegisterViewModel(rows[0]);
+                        model.ConfirmPassword = model.Password = "CPKUser";
+                    }
+                }
+                catch (Exception e)
+                {
+                    setError(e);
+                }
+            }
+            else if ("save".Equals(trigger))
+            {
+                model.ConfirmPassword = model.Password;
+            }
+
+            if (ViewBag.Message == null)
+            {
+                ModelState.Clear();
+                if (TryValidateModel(model))
+                {
+                    try
+                    {
+                        using (DBManager db = new DBManager())
+                        {
+                            string nameOfProcedure = "[CPK].[uspUpdateUser]";
+                            model.Password = Common.Encrypt(model.Password);
+                            List<SqlParameter> paramList = Common.ListToParameter<UserRegisterInfo>(
+                                AccountHelper.getUserRegisterInfo(model));
+                            db.GetExecuteNonQuery(paramList, nameOfProcedure);
+                            if ("reset".Equals(trigger)) returnPage = RedirectToAction("UserInfo", new { id = model.UserID });
+                            else if ("save".Equals(trigger)) returnPage = RedirectToAction("Index");
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        setError(e);
+                    }
+                }
+            }
+
+            return returnPage;
+        }
+
+        private void setError(Exception e)
+        {
+            ViewBag.Message = "Fatal: " + e.GetBaseException().Message;
         }
     }
 }
