@@ -30,9 +30,9 @@ else if (String.Equals(TempData["messageType"],"Error"))
             <thead>
                 <tr>
                     <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
-                    <th data-column="ReportID" data-sort="true" data-align="center">ID</th>
-                    <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Name</th>
-                    <th data-column="ReportPath">Path</th>
+                    <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
+                    <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
+                    <th data-column="ReportPath">Report Path</th>
                     <th data-column="IsActive" data-align="center">Active</th>
                     <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
                 </tr>
@@ -77,6 +77,7 @@ else if (String.Equals(TempData["messageType"],"Error"))
 
 
 </script>
+@Html.Partial("_UserListPartial")
 @Html.Partial("_ReportListPartial")
 
 @section Scripts {
