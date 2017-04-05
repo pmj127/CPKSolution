@@ -1,0 +1,3 @@
+for Unit Test, plese install Moq framework in CPK_Project.Tests
+
+tools > NuGet Package Manager > Manage NuGet Package for solution.. >  search --> "Moq framework" > Moq by Daniel -- > install in CPK_Project.Tests

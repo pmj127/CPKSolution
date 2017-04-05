@@ -15,7 +15,7 @@ namespace CPK_Project.Controllers
     {
         public ActionResult Index()
         {
-            string a = Common.Encrypt("CPKUser");
+            //string a = Common.Encrypt("CPKUser");
             //List<Address> addressList = null;
             //List<List<SqlParameter>> paras = null;
             //List<SqlParameter> paraList = new List<SqlParameter>();
