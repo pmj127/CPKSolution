@@ -23,7 +23,7 @@ using System.Web.Mvc;
 /// 
 namespace CPK_Project.Classes
 {
-    static class Common
+    public static class Common
     {
         #region Database
         /// <summary>
