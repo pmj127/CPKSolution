@@ -8,7 +8,11 @@ using CPK_Project.Classes;
 using CPK_DAL;
 using System.Data.SqlClient;
 using System.Data;
-
+/// <summary>
+/// common controller
+/// Create: 2017-02-05
+/// Author: Moonjoon Park
+/// </summary>
 namespace CPK_Project.Controllers
 {
     public class CommonController : Controller

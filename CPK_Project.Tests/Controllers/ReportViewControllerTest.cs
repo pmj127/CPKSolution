@@ -5,13 +5,20 @@ using CPK_Project;
 using CPK_Project.Controllers;
 using CPK_Project.Models;
 using Moq;
-
+/// <summary>
+/// ReportView Controller test
+/// Create: 2017-04-05
+/// Author: Moonjoon Park
+/// </summary>
 
 namespace CPK_Project.Controllers.Tests
 {
     [TestClass()]
     public class ReportViewControllerTest
     {
+        /// <summary>
+        /// test for Index
+        /// </summary>
         [TestMethod()]
         public void ReportViewControllerIndexTest()
         {
@@ -35,6 +42,9 @@ namespace CPK_Project.Controllers.Tests
             Assert.AreEqual(1, 1);
         }
 
+        /// <summary>
+        /// test for List
+        /// </summary>
         [TestMethod()]
         public void ReportViewControllerListTest()
         {
@@ -42,7 +52,9 @@ namespace CPK_Project.Controllers.Tests
             var result = controller.List() as ViewResult;
             Assert.AreEqual("", result.ViewName);
         }
-
+        /// <summary>
+        /// test for Create
+        /// </summary>
         [TestMethod()]
         public void ReportViewControllerCreateTest()
         {

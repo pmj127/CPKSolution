@@ -9,12 +9,19 @@ using CPK_Project.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Mvc;
-
+/// <summary>
+///  common class test
+/// Create: 2017-04-05
+/// Author: Moonjoon Park
+/// </summary>
 namespace CPK_Project.Classes.Tests
 {
     [TestClass()]
     public class CommonTests
     {
+        /// <summary>
+        /// test for make parameter list of list
+        /// </summary>
         [TestMethod()]
         public void ListToParametersTest()
         {
@@ -37,7 +44,9 @@ namespace CPK_Project.Classes.Tests
             Assert.IsInstanceOfType(result, typeof(List<List<SqlParameter>>));
 
         }
-
+        /// <summary>
+        /// test for make parameter list
+        /// </summary>
         [TestMethod()]
         public void ListToParameterTest()
         {
@@ -58,21 +67,27 @@ namespace CPK_Project.Classes.Tests
             List<SqlParameter> result = Common.ListToParameter(rv);
             Assert.IsInstanceOfType(result, typeof(List<SqlParameter>));
         }
-
+        /// <summary>
+        /// test for make parameter
+        /// </summary>
         [TestMethod()]
         public void GetParameterTestWithDbType()
         {
             SqlParameter result = Common.GetParameter("test", DbType.String, "1234", ParameterDirection.Input);
             Assert.IsInstanceOfType(result, typeof(SqlParameter));
         }
-
+        /// <summary>
+        /// test for make parameter
+        /// </summary>
         [TestMethod()]
         public void GetParameterTestWithType()
         {
             SqlParameter result = Common.GetParameter("test", typeof(string), "1234", ParameterDirection.Input);
             Assert.IsInstanceOfType(result, typeof(SqlParameter));
         }
-
+        /// <summary>
+        /// test for Datatable To List
+        /// </summary>
         [TestMethod()]
         public void DataToListTest()
         {
@@ -151,7 +166,9 @@ namespace CPK_Project.Classes.Tests
             Assert.AreEqual(expect.Account, result[0].Account);
 
         }
-
+        /// <summary>
+        /// test for Datatable To class
+        /// </summary>
         [TestMethod()]
         public void DataToClassTest()
         {
@@ -229,7 +246,9 @@ namespace CPK_Project.Classes.Tests
             RegisterViewModel result = Common.DataToClass<RegisterViewModel>(table.Rows[0]);
             Assert.AreEqual(expect.Account, result.Account);
         }
-
+        /// <summary>
+        /// test for check empty table
+        /// </summary>
         [TestMethod()]
         public void CheckEmptyTableTest()
         {
@@ -245,7 +264,9 @@ namespace CPK_Project.Classes.Tests
                 Assert.AreEqual("empty", ex.Message);
             }
         }
-
+        /// <summary>
+        /// test for making select list
+        /// </summary>
         [TestMethod()]
         public void GetSelectListTest()
         {

@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+/// <summary>
+/// common model
+/// Create: 2017-02-05
+/// Author: Moonjoon Park
+/// </summary>
 namespace CPK_Project.Models
 {
     public class ListViewModel<T>

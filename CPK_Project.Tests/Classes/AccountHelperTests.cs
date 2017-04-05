@@ -8,12 +8,19 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using CPK_Project.Models;
 using System.Data;
-
+/// <summary>
+///  AccountHelper test
+/// Create: 2017-04-05
+/// Author: Moonjoon Park
+/// </summary>
 namespace CPK_Project.Classes.Tests
 {
     [TestClass()]
     public class AccountHelperTests
     {
+        /// <summary>
+        /// test for getRegisterViewModel
+        /// </summary>
         [TestMethod()]
         public void getRegisterViewModelTest()
         {
@@ -92,7 +99,9 @@ namespace CPK_Project.Classes.Tests
 
             Assert.AreEqual(expect.Account, result.Account);
         }
-
+        /// <summary>
+        /// test for getUserRegisterInfo
+        /// </summary>
         [TestMethod()]
         public void getUserRegisterInfoTest()
         {

@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+/// <summary>
+/// ReportModel
+/// Create: 2017-02-05
+/// Author: Moonjoon Park
+/// </summary>
 namespace CPK_Project.Models
 {
     public class ReportModel

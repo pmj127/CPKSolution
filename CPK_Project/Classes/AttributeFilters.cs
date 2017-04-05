@@ -5,6 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security;
 
+/// <summary>
+/// attribute filter for ajax
+/// Create: 2017-02-05
+/// Author: Moonjoon Park
+/// </summary>
+
 namespace CPK_Project.Classes
 {
     public class CheckAuthorizeAttribute : ActionFilterAttribute, IAuthorizationFilter

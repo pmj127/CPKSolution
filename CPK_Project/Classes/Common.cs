@@ -15,12 +15,11 @@ using System.IO;
 using System.Web.Mvc;
 
 /// <summary>
-/// Team: Red Binder
 /// Common class for static function
 /// Create: 2017-02-05
 /// Author: Moonjoon Park
 /// </summary>
-/// 
+
 namespace CPK_Project.Classes
 {
     public static class Common
