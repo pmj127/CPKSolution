@@ -5,7 +5,6 @@
 }
 <h2>CPK Solution</h2>
 <hr />
-
 <script src="~/Scripts/dist/jstree.js"></script>
 <link rel="stylesheet" href="~/Scripts/dist/themes/default/style.css" />
 
@@ -14,58 +13,43 @@
 
 </div>
 
-<script type="text/javascript">   
+<script type="text/javascript">
+
+    //$('#groupTree').jstree({
+    //    'core': {
+    //        'data': [
+    //            {
+    //                "text": "CPK Solution", "state" : { "opened" : true }, "children": [
+    //                      {
+    //                          "text": "Sales Dept", "id": 1, "children": [
+    //                              { "text": "Sales Section", "id": 2 }
+    //                          ]
+    //                      },
+    //                      {
+    //                          "text": "Quality Control Dept", "id": 3, "state": { "opened": true }, "children": [
+    //                              { "text": "Quality Control Section", "id": 4 },
+    //                              { "text": "Quality Engineering", "id": 5 },
+    //                              { "text": "Manufacturing Process", "state": { "opened": true , "selected": true }, "id": 6 },
+    //                              { "text": "Torsion Testing", "id": 7 }
+    //                          ]
+    //                      }
+    //                ]
+    //            }
+    //        ]
+    //    }
+    //});
 
     $('#groupTree').jstree({
         'core': {
-            'data': [
-                {
-                    "text": "CPK Solution", "state" : { "opened" : true }, "children": [
-                          {
-                              "text": "Sales Dept", "id": 1, "children": [
-                                  { "text": "Sales Section", "id": 2 }
-                              ]
-                          },
-                          {
-                              "text": "Quality Control Dept", "id": 3, "state": { "opened": true }, "children": [
-                                  { "text": "Quality Control Section", "id": 4 },
-                                  { "text": "Quality Engineering", "id": 5 },
-                                  {
-                                      "text": "Manufacturing Process", "state": { "opened": true , "selected": true }, "id": 6, children: [
-                                          { "text": "Quality Control Report", "icon": "jstree-file" },
-                                          { "text": "Manufacturing Report", "icon": "jstree-file" }
-                                      ]
-                                  },
-                                  { "text": "Torsion Testing", "id": 7 }
-                              ]
-                          }
-                    ]
+            'data': {
+                'url': "@Url.Action("GetList")",
+                'data': function () {
+                    return { 'UserId': 1, 'GroupId': 1 };
                 }
-            ]
+            }
         }
     });
 
-    $('#groupTree').jstree({
-        "text": "CPK Solution1", "state": { "opened": true }, "children": [
-              {
-                  "text": "Sales Dept1", "id": 1, "children": [
-                      { "text": "Sales Section", "id": 2 }
-                  ]
-              },
-              {
-                  "text": "Quality Control Dept1", "id": 3, "state": { "opened": true }, "children": [
-                      { "text": "Quality Control Section", "id": 4 },
-                      { "text": "Quality Engineering", "id": 5 },
-                      {
-                          "text": "Manufacturing Process", "state": { "opened": true, "selected": true }, "id": 6, children: [
-                              { "text": "Quality Control Report", "icon": "jstree-file" },
-                              { "text": "Manufacturing Report", "icon": "jstree-file" }
-                          ]
-                      },
-                      { "text": "Torsion Testing", "id": 7 }
-                  ]
-              }
-        ]
-    });
+
 
 </script>

@@ -13,38 +13,38 @@ namespace CPK_Project.Controllers
 {
     public class GroupController : Controller
     {
-        // GET: Group
+
+
         public ActionResult List()
         {
-
-
-
-
             return View();
+
+
+
+
         }
 
-        public JsonResult GetList(int pageNo, int pageSize, string searchText, string isActive, string orderColumn, string orderDesc)
+
+        public JsonResult GetList(int groupID, string userID)
         {
             try
             {
                 using (DBManager db = new DBManager())
                 {
-                    string nameOfProcedure = "CPK.uspUserList";
+                    string nameOfProcedure = "CPK.uspGroupList";
                     List<SqlParameter> paraList = new List<SqlParameter>();
-                    paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
-                    paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
-                    paraList.Add(Common.GetParameter("FullName", DbType.String, searchText, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(groupID), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
                     DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
-                    ListViewModel<UserListViewModel> listView = Common.DataToClass<ListViewModel<UserListViewModel>>(DbSet.Tables[0].Rows[0]);
-                    List<UserListViewModel> userList = Common.DataToList<UserListViewModel>(DbSet.Tables[1]);
-                    listView.Rows = userList;
-                    return Json(listView, JsonRequestBehavior.DenyGet);
+                    List<GroupModel> listView = Common.DataToList<GroupModel>(DbSet.Tables[0]);
+                    
+                    return Json(listView, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
                 JsonError e = new JsonError(ex.Message);
-                return Json(e, JsonRequestBehavior.DenyGet);
+                return Json(e, JsonRequestBehavior.AllowGet);
             }
 
         }
