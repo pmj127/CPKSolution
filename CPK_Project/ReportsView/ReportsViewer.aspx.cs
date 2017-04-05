@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using CPK_DAL;
 using System.Data;
+using System.Data.SqlClient;
 using CPK_Project.Models;
 using CPK_Project.Classes;
 
@@ -26,8 +27,19 @@ namespace CPK_Project.ReportView
                         ReportModel report = new ReportModel();
                         using (DBManager db = new DBManager())
                         {
-                            DataSet DbSet = db.GetSelectQuery(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(Request["ReportID"])),
-                                "CPK.uspGetReportInfo");
+                            DataSet DbSet;
+                            if (User.IsInRole("Admin"))
+                            {
+                                DbSet = db.GetSelectQuery(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(Request["ReportID"])),"CPK.uspGetReportInfo");
+                            }
+                            else
+                            {
+                                List<SqlParameter> list = new List<SqlParameter>();
+                                list.Add(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(Request["ReportID"])));
+                                list.Add(Common.GetParameter("UserID", DbType.String, Convert.ToInt32(User.Identity.Name)));
+                                DbSet = db.GetSelectQuery(list, "CPK.uspGetReportInfoUser");
+                            }
+
                             report = Common.DataToClass<ReportModel>(DbSet.Tables[0].Rows[0]);
                         }
 
@@ -54,7 +66,7 @@ namespace CPK_Project.ReportView
                     }
                     catch (Exception ex)
                     {
-                        //redirect error page
+                        Response.Redirect("Error.html", false);
                     }
                 }
             }

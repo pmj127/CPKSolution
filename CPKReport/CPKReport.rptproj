@@ -6,6 +6,10 @@
       <Name>AdventureWorks.rds</Name>
       <FullPath>AdventureWorks.rds</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>CPKSolution.rds</Name>
+      <FullPath>CPKSolution.rds</FullPath>
+    </ProjectItem>
   </DataSources>
   <DataSets />
   <Reports>
@@ -32,6 +36,10 @@
     <ProjectItem>
       <Name>test2.rdl</Name>
       <FullPath>test2.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>ReportViewCount.rdl</Name>
+      <FullPath>ReportViewCount.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>
