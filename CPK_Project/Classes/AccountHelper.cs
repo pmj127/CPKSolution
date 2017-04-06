@@ -46,7 +46,7 @@ namespace CPK_Project.Classes
 
         public static DataRowCollection getUserRowByID(CPK_DAL.DBManager db, string id)
         {
-            var sql = "SELECT * FROM [CPK].[Users] WHERE UserID = '" + id + "'";
+            var sql = "SELECT * FROM [CPK].[Users] WHERE UserID = '" + id + "';";
             return db.GetSelectQuery(sql).Tables[0].Rows; 
         }
     }
