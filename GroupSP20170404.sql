@@ -22,12 +22,19 @@ BEGIN
 
 	SET NOCOUNT ON;
 
-    SELECT GroupID AS 'id', GroupName AS 'text'
-	FROM [CPK].[Group]
-	WHERE GroupID NOT IN (SELECT ChildGroupID FROM [CPK].[ChildGroup]);
-		
-	
-	
+	DECLARE @ParentIds TABLE(parentId INT);
+
+    SELECT g.GroupID AS 'id', g.GroupName AS 'text', 0 AS 'parentId'
+	FROM [CPK].[Group] g
+		LEFT JOIN [CPK].[ChildGroup] c
+		ON g.GroupID = c.ChildGroupID
+    WHERE c.ChildGroupID IS NULL;
+
+	SELECT g.GroupID AS 'id', g.GroupName AS 'text', c.GroupID AS 'parentId'
+	FROM [CPK].[Group] g
+		JOIN [CPK].[ChildGroup] c
+		ON g.GroupID = c.ChildGroupID;
+
 END
 
 GO

@@ -13,6 +13,10 @@ namespace CPK_Project.Models
 
         public int id { get; set; }
 
-        public GroupModel children { get; set; }
+        public int parentId { get; set; }
+
+        public List<GroupModel> children { get; set; }
     }
+
+
 }

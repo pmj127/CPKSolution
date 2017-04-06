@@ -15,40 +15,25 @@
 
 <script type="text/javascript">
 
-    //$('#groupTree').jstree({
-    //    'core': {
-    //        'data': [
-    //            {
-    //                "text": "CPK Solution", "state" : { "opened" : true }, "children": [
-    //                      {
-    //                          "text": "Sales Dept", "id": 1, "children": [
-    //                              { "text": "Sales Section", "id": 2 }
-    //                          ]
-    //                      },
-    //                      {
-    //                          "text": "Quality Control Dept", "id": 3, "state": { "opened": true }, "children": [
-    //                              { "text": "Quality Control Section", "id": 4 },
-    //                              { "text": "Quality Engineering", "id": 5 },
-    //                              { "text": "Manufacturing Process", "state": { "opened": true , "selected": true }, "id": 6 },
-    //                              { "text": "Torsion Testing", "id": 7 }
-    //                          ]
-    //                      }
-    //                ]
-    //            }
-    //        ]
-    //    }
-    //});
 
     $('#groupTree').jstree({
         'core': {
             'data': {
                 'url': "@Url.Action("GetList")",
-                'data': function () {
+                'data': function (arg) {
+                    arg = arg;
                     return { 'UserId': 1, 'GroupId': 1 };
                 }
             }
+        //},
+        //"types": {
+        //    "root": {
+        //        "icon": "~/Scripts/dist/themes/companies-128.png",
+        //        "valid_children": ["default"]
+        //    }
         }
     });
+
 
 
 
