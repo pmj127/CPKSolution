@@ -21,6 +21,7 @@ namespace CPK_Project.Controllers
 
         }
 
+        [AllowAnonymous]
         public JsonResult GetList(int groupID, string userID)
         {
             try
