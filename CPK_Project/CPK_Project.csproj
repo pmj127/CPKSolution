@@ -313,9 +313,11 @@
     <Content Include="Views\Account\UserInfo.cshtml" />
     <Content Include="Views\Shared\_UserListPartial.cshtml" />
     <Content Include="Views\Group\List.cshtml" />
+    <Content Include="Views\Home\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Common\" />
   </ItemGroup>

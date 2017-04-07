@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    <ul class="nav navbar-nav">
-        @if (User.IsInRole("Admin"))
+<ul class="nav navbar-nav">
+    @if (Request.IsAuthenticated)
+    {
+
+        if (User.IsInRole("Admin"))
         {
             <li>@Html.ActionLink("User", "Index", "Account")</li>
             <li>@Html.ActionLink("Reports", "List", "ReportView")</li>
@@ -13,6 +14,7 @@
             <li>@Html.ActionLink("Reports", "Reports", "Group")</li>
         }
 
-    </ul>
-}
+    }
+    <li>@Html.ActionLink("Help", "Help", "Home")</li>
+</ul>
 

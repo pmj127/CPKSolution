@@ -65,4 +65,18 @@ html,body {height:100%;}
         margin-bottom: 5px;
     }
 
+    .panel {
+        border: 1px solid #f4511e;
+    }
+    .panel-heading {
+        color: #fff !important;
+        background-color: #f4511e !important;
+    }
+    .panel-footer {
+        color: #fff !important;
+        background-color: #f4511e !important;
+    }
 
+    .navbar-brand{
+        font-family: 'Abril Fatface', cursive;
+    }

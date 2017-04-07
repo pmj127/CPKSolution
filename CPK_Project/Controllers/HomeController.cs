@@ -32,6 +32,10 @@ namespace CPK_Project.Controllers
             return View();
         }
 
+        public ActionResult Help()
+        {
+            return View();
+        }
 
     }
 }
