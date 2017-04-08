@@ -98,7 +98,7 @@ namespace CPK_Project.Controllers
             }
 
         }
-        // GET: ReportView/Details/5
+
         [Authorize(Roles = "Admin")]
         public ActionResult List()
         {

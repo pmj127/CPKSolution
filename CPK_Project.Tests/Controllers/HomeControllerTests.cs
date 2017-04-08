@@ -26,5 +26,13 @@ namespace CPK_Project.Controllers.Tests
             var result = controller.Index() as ViewResult;
             Assert.AreEqual("", result.ViewName);
         }
+
+        [TestMethod()]
+        public void HomeControllerHelpTest()
+        {
+            var controller = new HomeController();
+            var result = controller.Help() as ViewResult;
+            Assert.AreEqual("", result.ViewName);
+        }
     }
 }

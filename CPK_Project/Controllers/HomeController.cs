@@ -15,26 +15,32 @@ namespace CPK_Project.Controllers
     {
         public ActionResult Index()
         {
-            //string a = Common.Encrypt("CPKUser");
-            //List<Address> addressList = null;
-            //List<List<SqlParameter>> paras = null;
-            //List<SqlParameter> paraList = new List<SqlParameter>();
-
-            //using (DBManager db = new DBManager())
-            //{
-            //    paraList.Add(Common.GetParameter("PostalCode", DbType.String, "98028", ParameterDirection.Input));
-            //    DataSet DbSet =  db.GetSelectQuery(paraList, "Person.uspGetAddress1");
-            //    addressList = Common.DataToList<Address>(DbSet.Tables[0]);
-            //    paras = Common.ListToParameters(addressList);
-            //    paraList.Add(Common.GetParameter(nameof(Address.AddressID), addressList[0]));
-            //    paraList.Add(Common.GetParameter("test", DbType.Int16, 3, ParameterDirection.Input));
-            //}
             return View();
         }
 
         public ActionResult Help()
         {
             return View();
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult LoginPartial()
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                using (DBManager db = new DBManager())
+                {
+                    string UserID = User.Identity.Name;
+                    string procedureName = "CPK.uspMessageUnreadCount";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    if (User.IsInRole("Admin"))
+                        UserID = "Administrator";
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, UserID, ParameterDirection.Input));
+                    DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                    ViewBag.count = Int16.Parse( DbSet.Tables[0].Rows[0]["MessageCount"].ToString());
+                }
+            }
+            return PartialView("~/Views/Shared/_LoginPartial.cshtml");
         }
 
     }

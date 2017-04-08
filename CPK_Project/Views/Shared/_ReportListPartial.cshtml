@@ -1,10 +1,13 @@
-﻿<!-- Button trigger modal -->
+﻿<!-- Button trigger modal 
 <button type="button" id="btnReportsModal" class="btn btn-primary btn-lg" data-toggle="modal" 
         data-target="#ReportsModal" data-backdrop="static" data-keyboard="false" 
         data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList">
     Show Report List
 </button>
 <script type="text/javascript">
+
+    //to refresh grid
+     $("#ReportListRefresh").trigger("click");
 
     function GetReportGroupList(){
         //alert("close");
@@ -50,7 +53,7 @@
                     modalShow(gridID, true);
                     return;
                 }
-                modalMessage(gridID, "Success", "Successfully, reports were inserted in the group!", true);
+                modalMessage(gridID, "Success", "Successfully, reports were selected!", true);
                 $("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
             },
             error: function (xhr, status, errorThrown) {
@@ -81,7 +84,7 @@
         $.ajax(ajaxSetting);
     }
 </script>
-
+-->
 <!-- report list for selecting -->
 <div class="modal fade" id="ReportsModal" tabindex="-1" role="dialog" aria-labelledby="ReportListLabel" style="padding-top: 5%;">
     <div class="modal-dialog" role="document">

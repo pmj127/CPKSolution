@@ -96,6 +96,7 @@
     <Compile Include="Classes\CommonTests.cs" />
     <Compile Include="Controllers\AccountControllerTests.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
+    <Compile Include="Controllers\MessageControllerTests.cs" />
     <Compile Include="Controllers\ReportViewControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

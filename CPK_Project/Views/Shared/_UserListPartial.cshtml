@@ -1,4 +1,4 @@
-﻿<!-- Button trigger modal -->
+﻿<!-- Button trigger modal 
 <button type="button" id="btnUsersModal" class="btn btn-primary btn-lg" data-toggle="modal"
         data-target="#UsersModal" data-backdrop="static" data-keyboard="false"
         data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList">
@@ -6,6 +6,10 @@
 </button>
 <script type="text/javascript">
     var groupID = 1;
+
+     //to refresh grid
+     $("#UserListRefresh").trigger("click");
+
 
     ///moongrid modal
     function modalMessage(gridID,title, body, footer) {
@@ -73,7 +77,7 @@
                     modalShow(gridID, true);
                     return;
                 }
-                modalMessage(gridID, "Success", "Successfully, Users were inserted in the group!", true);
+                modalMessage(gridID, "Success", "Successfully, Users were selected", true);
                 $("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
             },
             error: function (xhr, status, errorThrown) {
@@ -104,7 +108,7 @@
         $.ajax(ajaxSetting);
     }
 </script>
-
+-->
 <!-- user list for selecting -->
 <div class="modal fade" id="UsersModal" tabindex="-1" role="dialog" aria-labelledby="UsertListLabel" style="padding-top: 5%;">
     <div class="modal-dialog" role="document">

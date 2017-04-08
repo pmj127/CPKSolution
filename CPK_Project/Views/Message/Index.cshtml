@@ -1,8 +1,121 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Message";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Message</h2>
+<hr />
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#divSend" aria-controls="divSend" role="tab" data-toggle="tab" id="tapSend"><strong>Send</strong></a></li>
+    <li role="presentation"><a href="#divReceive" aria-controls="divReceive" role="tab" data-toggle="tab" id="tapReceive"><strong>Receive</strong></a></li>
+</ul>
+<div style="padding:5px 0;text-align:right">
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Send Message", "Send", "Message", null, new { @class = "btn btn-info" })
+    }
+    else
+    {
+        @Html.ActionLink("Send Message", "Create", "Message", null, new { @class = "btn btn-info" })
+    }
+</div>
+
+@if (String.Equals(TempData["messageType"], "Success"))
+{
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong>@TempData["messageType"]</strong> @TempData["message"]
+    </div>
+}
+else if (String.Equals(TempData["messageType"], "Error"))
+{
+    <div class="alert alert-danger alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong>@TempData["messageType"]</strong> @TempData["message"]
+    </div>
+}
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="divSend">
+        <div id="gridSend" style="min-width:400px;">
+            <div>
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th data-column="Title"  data-action="grid_click">Title</th>
+                            <th data-column="UserID" data-align="center">Recipient</th>
+                            <th data-column="SendDate"  data-align="center">Sent Date</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="divReceive">
+        <div id="gridReceive" style="min-width:400px;">
+            <div>
+                <table class="table table-striped table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th data-column="Title" data-action="grid_click">Title</th>
+                            <th data-column="UserID" data-align="center">Sender</th>
+                            <th data-column="ReceiveDate" data-align="center">Received Date</th>
+                            <th data-column="ReadDate" data-align="center">Read</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $("#tapSend").click(function () {
+            if (!$(this).parent().hasClass("active"))
+                $("#gridSendRefresh").trigger("click");
+        });
+        $("#tapReceive").click(function () {
+            if (!$(this).parent().hasClass("active"))
+                $("#gridReceiveRefresh").trigger("click");
+        });
+        $("#gridSend").moonGrid({
+            pageNo: 1,
+            pageSize: 10,
+            url: "@Url.Action("GetListSend", "Message")",
+            showSort: false,
+            showSearcher: false,
+            showModal: false
+        });
+        $("#gridReceive").moonGrid({
+            pageNo: 1,
+            pageSize: 10,
+            url: "@Url.Action("GetListReceive", "Message")",
+            showSort: false,
+            showSearcher: false,
+            showModal: false
+        });
+    });
+
+    function grid_click(event)
+    {
+        //event.data.row has all row information such as ReportID, ReportName, and so on
+        //alert(event.data.row.ReportID);
+        //window.location.href = "/ReportView/Details?id=" + event.data.row.ReportID;
+        window.location.href = "@Url.Action("Details", "Message", new { id = "messageID" })".replace("messageID", event.data.row.MessageID);
+    }
+
+</script>
+
+@section Scripts {
+    @Styles.Render("~/Content/moonGrid")
+    @Scripts.Render("~/bundles/moonGrid")
+}
 

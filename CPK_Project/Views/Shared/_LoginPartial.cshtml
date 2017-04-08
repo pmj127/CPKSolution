@@ -7,7 +7,12 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="#">Hello! @User.Identity.GetUserName()</a>
+            <a href="@Url.Action("Index", "Message")">Hello! @User.Identity.GetUserName() 
+            @if (ViewBag.count > 0)
+            {
+                <span class="glyphicon glyphicon-envelope" />
+            }
+            </a>
             @*Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "UserInfo", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })*@
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
