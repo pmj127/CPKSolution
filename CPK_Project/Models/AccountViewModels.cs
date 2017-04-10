@@ -108,8 +108,7 @@ namespace CPK_Project.Models
 
         [Required]
         [Display(Name = "Account")]
-        [StringLength(50)]
-        public string Account { get; set; }
+        public int Account { get; set; }
         public string Status { get; set; }
     }
 
@@ -147,7 +146,7 @@ namespace CPK_Project.Models
         public string UserID { get; set; }
         public string UserType { get; set; }
         public string FullName { get; set; }
-        public string Account { get; set; }
+        public int Account { get; set; }
         public string Status { get; set; }
         public string ModifyDate { get; set; }
     }

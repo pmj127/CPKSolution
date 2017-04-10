@@ -16,7 +16,7 @@ namespace CPK_Project.Classes
         {
             return new RegisterViewModel
             {
-                Account = row["Account"].ToString(),
+                Account = Int16.Parse(row["Account"].ToString()),
                 Email = (String)row["Email"],
                 FullName = (String)row["FullName"],
                 Password = (String)row["password"],

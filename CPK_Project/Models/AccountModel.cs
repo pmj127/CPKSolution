@@ -50,8 +50,7 @@ namespace CPK_Project.Models
         public string UserType { get; set; }
         [Required]
         [Display(Name = "Account")]
-        [StringLength(50)]
-        public string Account { get; set; }
+        public int Account { get; set; }
         public string Status { get; set; }
     }
     public class UserRegisterInfo
@@ -63,7 +62,7 @@ namespace CPK_Project.Models
         public string Email { get; set; }
         public string UserRole { get; set; }
         public string UserType { get; set; }
-        public string Account { get; set; }
+        public int Account { get; set; }
         public string Status { get; set; }
     }
 
