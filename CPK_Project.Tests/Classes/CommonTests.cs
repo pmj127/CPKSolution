@@ -27,7 +27,7 @@ namespace CPK_Project.Classes.Tests
         {
             RegisterViewModel rv = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",
@@ -52,7 +52,7 @@ namespace CPK_Project.Classes.Tests
         {
             RegisterViewModel rv = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",
@@ -152,7 +152,7 @@ namespace CPK_Project.Classes.Tests
 
             RegisterViewModel expect = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",
@@ -233,7 +233,7 @@ namespace CPK_Project.Classes.Tests
 
             RegisterViewModel expect = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",

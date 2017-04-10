@@ -85,6 +85,7 @@
                 @Html.DropDownListFor(m => m.Status, new List<SelectListItem>
            {
                new SelectListItem { Text = "Active", Value ="Active" },
+               new SelectListItem { Text = "Inactive", Value ="Inactive" },
                new SelectListItem { Text = "Waiting", Value ="Waiting" }
 
            }, new { @class = "form-control" })

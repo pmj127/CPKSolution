@@ -72,7 +72,7 @@ namespace CPK_Project.Classes.Tests
             table.Columns.Add(UserType);
 
             DataRow dr = table.NewRow();
-            dr["Account"] = "1234";
+            dr["Account"] = 1234;
             dr["Email"] = "1234";
             dr["FullName"] = "1234";
             dr["password"] = "1234";
@@ -84,7 +84,7 @@ namespace CPK_Project.Classes.Tests
 
             RegisterViewModel expect = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",
@@ -107,7 +107,7 @@ namespace CPK_Project.Classes.Tests
         {
             RegisterViewModel rv = new RegisterViewModel
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",
@@ -120,7 +120,7 @@ namespace CPK_Project.Classes.Tests
 
             UserRegisterInfo expect =  new UserRegisterInfo
             {
-                Account = "1234",
+                Account = 1234,
                 Email = "1234",
                 FullName = "1234",
                 Password = "1234",

@@ -50,29 +50,37 @@ namespace CPK_Project.Controllers
                         UserInfoModel userInfo = new UserInfoModel();
                         model.Password = Common.Encrypt(model.Password);
                         List<SqlParameter> paraList = Common.ListToParameter<LoginModel>(model);
-                        //paraList.Add(Common.GetParameter("UserID", DbType.String, model.UserID, ParameterDirection.Input));
-                        //paraList.Add(Common.GetParameter("Password", DbType.String, model.Password, ParameterDirection.Input));
 
                         DataSet DbSet = db.GetSelectQuery(paraList, "CPK.uspLogin");
                         DataTable dataTable = DbSet.Tables[0];
                         Common.CheckEmptyTable(dataTable, message);
                         userInfo = Common.DataToClass<UserInfoModel>(dataTable.Rows[0]);
-
-                        FormsAuthenticationTicket ticket =
-                               new FormsAuthenticationTicket(1, userInfo.UserID, DateTime.Now, DateTime.Now.AddMinutes(30), false
-                                   , userInfo.UserRole + "|" + userInfo.UserType, FormsAuthentication.FormsCookiePath);
-                        string encTicket = FormsAuthentication.Encrypt(ticket);
-                        Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-
-                        //Session["User"] = userInfo;
-
-                        if (!String.IsNullOrEmpty(returnUrl))
+                        if(userInfo.Status.ToString().Equals(Enum.GetName(typeof(Common.SelectListType), 0))) //Active
                         {
-                            return Redirect(returnUrl);
+                            FormsAuthenticationTicket ticket =
+                                   new FormsAuthenticationTicket(1, userInfo.UserID, DateTime.Now, DateTime.Now.AddMinutes(30), false
+                                       , userInfo.UserRole + "|" + userInfo.UserType, FormsAuthentication.FormsCookiePath);
+                            string encTicket = FormsAuthentication.Encrypt(ticket);
+                            Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+
+                            //Session["User"] = userInfo;
+
+                            if (!String.IsNullOrEmpty(returnUrl))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
-                        else
+                        else if (userInfo.Status.ToString().Equals(Enum.GetName(typeof(Common.SelectListType), 1))) //Inactive
                         {
-                            return RedirectToAction("Index", "Home");
+                            message = "Your Account is inactived. Please conntact Administrator.";
+                        }
+                        else //Wating
+                        {
+                            message = "Your Account is in the approval process.";
                         }
                     }
                 }
