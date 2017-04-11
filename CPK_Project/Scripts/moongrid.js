@@ -262,8 +262,10 @@
             $(this).prepend('<div style="padding-bottom:2px;"></div>');
             $(this).append('<div align="center" ></div>');
             $(this).append('<div class="modal" id="' + gridID + 'Modal" role="dialog" style="padding-top: 20%;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-secondary" id="btn'+gridID+'Modal">Close</button></div></div></div></div>');
-            $(this).append('<div id="' + gridID + 'Refresh" style="display:none;"/>');
+            $(this).append('<div id="' + gridID + 'Refresh" style="display:none;"><input type="hidden" id="' + gridID + 'FilterTextHidden" ></div>');
             $("#" + gridID + "Refresh").on("click", function () {
+                if ($("#" + gridID + "FilterTextHidden").val() != "")
+                    settings.filterText = $("#" + gridID + "FilterTextHidden").val();
                 Grid.ajax();
             });
             $("#btn" + gridID + "Modal").on("click", function () {
