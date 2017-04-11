@@ -2,39 +2,168 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
-<h2>CPK Solution</h2>
-<hr />
-<script src="~/Scripts/dist/jstree.js"></script>
-<link rel="stylesheet" href="~/Scripts/dist/themes/default/style.css" />
+    <script src="~/Scripts/dist/jstree.js"></script>
+    <link rel="stylesheet" href="~/Scripts/dist/themes/default/style.css" />
+    <link rel="stylesheet" href="~/Content/dashboard.css" />
+    <div class="row">
 
-<div id="groupTree" style="min-width:350px;" >
-    
+        <div class="col-sm-3 col-md-3 sidebar">
+            <div id="groupTree" style="min-width:300px;">
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
+            <h2>CPK Solution</h2>
+            <div id="event_result"></div>
+            <hr />
+            <div class="upperPane" stlye="">
+                <h3>Report List</h3>
+                <div id="grid" style="min-width:250px;height:250px;overflow:auto;" >
+                    <div>
+                        <table class="table table-striped table-bordered table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
+                                    <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
+                                    <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
+                                    <th data-column="ReportPath">Report Path</th>
+                                    <th data-column="IsActive" data-align="center">Active</th>
+                                    <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
 
-</div>
+
+            </div>
+            <div style="height:35px;" ></div> 
+
+            <div class="lowerPane">
+                <h3>User List</h3>
+                <div id="grid2" style="min-width:250px;height:250px;overflow:auto;">
+                    <div>
+                        <table class="table table-striped table-bordered table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th data-column="UserID">UserID</th>
+                                    <th data-column="UserType" data-sort="true" data-align="center" data-action="grid_click">Type</th>
+                                    <th data-column="FullName" data-sort="true" data-search="true" data-action="grid_click">Name</th>
+                                    <th data-column="Account" data-sort="true" data-action="grid_click">Account ID</th>
+                                    <th data-column="Status" data-sort="true" data-action="grid_click">Status</th>
+                                    <th data-column="ModifyDate" data-sort="true" data-align="center" data-action="grid_click">Modify Date</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 <script type="text/javascript">
 
-
-    $('#groupTree').jstree({
-        'core': {
-            'data': {
-                'url': "@Url.Action("GetList")",
-                'data': function (arg) {
-                    arg = arg;
-                    return { 'UserId': 1, 'GroupId': 1 };
-                }
-            }
-        //},
-        //"types": {
-        //    "root": {
-        //        "icon": "~/Scripts/dist/themes/companies-128.png",
-        //        "valid_children": ["default"]
-        //    }
-        }
+    $(function () {
+        $("#grid").moonGrid({
+            pageNo: 1,
+            pageSize: 10,
+            searchText: null,
+            filterText: null,
+            orderColumn: null,
+            orderDesc: null,
+            //url: "/ReportView/GetList",
+            url:"@Url.Action("GetList", "ReportView")",
+            sync: true,
+            showPager: false,
+            showSort: true,
+            showSearcher: false,
+            showModal: false
+        });
     });
 
+    function grid_click(event)
+    {
+        //event.data.row has all row information such as ReportID, ReportName, and so on
+        //alert(event.data.row.ReportID);
+        //window.location.href = "/ReportView/Details?id=" + event.data.row.ReportID;
+        window.location.href = "@Url.Action("Details", "ReportView", new { id = "reportId" })".replace("reportId", event.data.row.ReportID);
+    }
+    function grid_radio_click(event) {
+        //event.data.row has all row information such as ReportID, ReportName, and so on
+        //alert(event.data.row.ReportID);
+        window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
+    }
+
+    $(function () {
+        $("#grid2").moonGrid({
+            pageNo: 1,
+            pageSize: 10,
+            searchText: null,
+            orderColumn: null,
+            orderDesc: null,
+            url: "@Url.Action("GetList", "Account")",
+            sync: true,
+            showPager: false,
+            showSort: true,
+            showSearcher: false,
+            showModal: false
+        });
+    });
+
+    function grid_click(event) {
+        window.location.href = "/Account/UserInfo?id=" + event.data.row.UserID;
+    }
+
+
+    $(document).ready(init);
+
+    function init() {
+        reloadTree();
+        jsTreeSelected();
+
+    }
+
+    function jsTreeSelected() {
+        $('#groupTree').on('select_node.jstree', function (e, data) {
+            var i, j, r = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+            }
+            $('#event_result').html('Selected: ' + r.join(', '));
+
+            $("#grid2").moonGrid.
+
+        }).jstree();
+    }
+
+    function reloadTree() {
+        $('#groupTree').jstree({
+            'core': {
+                'data': {
+                    'url': "@Url.Action("GetList")",
+                    'data': function (arg) {
+                        arg = arg;
+                        return { 'UserId': 1, 'GroupId': 1 };
+                    }
+                }
+            }
+        });
+    }
 
 
 
 </script>
+
+@section Scripts {
+    @Styles.Render("~/Content/moonGrid")
+    @Scripts.Render("~/bundles/moonGrid")
+}
+
+
+
+

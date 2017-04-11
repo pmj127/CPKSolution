@@ -8,20 +8,24 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/// <summary>
+/// Group controller
+/// Create: 2017-04-02
+/// Author: Yoonsuk Cho
+/// </summary>
 namespace CPK_Project.Controllers
 {
     public class GroupController : Controller
     {
 
-
+        [Authorize]
         public ActionResult List()
         {
             return View();
 
         }
 
-        [AllowAnonymous]
+        [Authorize]
         public JsonResult GetList(int groupID, string userID)
         {
             try
