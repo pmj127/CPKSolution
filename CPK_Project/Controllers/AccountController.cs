@@ -76,7 +76,7 @@ namespace CPK_Project.Controllers
                         }
                         else if (userInfo.Status.ToString().Equals(Enum.GetName(typeof(Common.SelectListType), 1))) //Inactive
                         {
-                            message = "Your Account is inactived. Please conntact Administrator.";
+                            message = "Your Account is inactive. Please conntact Administrator.";
                         }
                         else //Wating
                         {
