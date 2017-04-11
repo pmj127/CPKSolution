@@ -265,7 +265,7 @@
             $(this).append('<div id="' + gridID + 'Refresh" style="display:none;"><input type="hidden" id="' + gridID + 'FilterTextHidden" ></div>');
             $("#" + gridID + "Refresh").on("click", function () {
                 if ($("#" + gridID + "FilterTextHidden").val() != "")
-                    settings.filterText = $("#" + gridID + "FilterTextHidden").val();
+                    ajaxSetting.data.filterText = $("#" + gridID + "FilterTextHidden").val();
                 Grid.ajax();
             });
             $("#btn" + gridID + "Modal").on("click", function () {
