@@ -99,6 +99,40 @@ namespace CPK_Project.Controllers
 
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public JsonResult GetListByGroup(string filterText)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+
+                    string procedureName = "CPK.uspReportListByGroup";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                   // paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
+                   // paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
+                   // paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("GroupId", DbType.String, Convert.ToInt32(filterText), ParameterDirection.Input));
+
+                    DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                    ListViewModel<ReportAdmin> listView = Common.DataToClass<ListViewModel<ReportAdmin>>(DbSet.Tables[0].Rows[0]);
+                    List<ReportAdmin> reportList = Common.DataToList<ReportAdmin>(DbSet.Tables[1]);
+                    listView.Rows = reportList;
+                    return Json(listView, JsonRequestBehavior.DenyGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+
+
         [Authorize(Roles = "Admin")]
         public ActionResult List()
         {

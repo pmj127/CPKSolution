@@ -37,7 +37,7 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(groupID), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
                     DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
-                    List<GroupModel> groupList = Common.DataToList<GroupModel>(DbSet.Tables[0]);
+                    List<GroupTreeModel> groupList = Common.DataToList<GroupTreeModel>(DbSet.Tables[0]);
 
                     DataTable table = DbSet.Tables[1];
                     int rowCnt = table.Rows.Count;
@@ -66,17 +66,17 @@ namespace CPK_Project.Controllers
 
         }
 
-        private List<GroupModel> AddNodeToParentNode(List<GroupModel> groupList, DataRow row, out bool doAdded)
+        private List<GroupTreeModel> AddNodeToParentNode(List<GroupTreeModel> groupList, DataRow row, out bool doAdded)
         {
             doAdded = false;
-            GroupModel groupNode = Common.DataToClass<GroupModel>(row);
-            foreach (GroupModel oneNode in groupList)
+            GroupTreeModel groupNode = Common.DataToClass<GroupTreeModel>(row);
+            foreach (GroupTreeModel oneNode in groupList)
             {
                 if (oneNode.id == groupNode.parentId)
                 {
                     if (oneNode.children == null)
                     {
-                        oneNode.children = new List<GroupModel>();
+                        oneNode.children = new List<GroupTreeModel>();
                     }
                     oneNode.children.Add(groupNode);
                     doAdded = true;
@@ -86,13 +86,13 @@ namespace CPK_Project.Controllers
                 {
                     if (oneNode.children != null)
                     {
-                        foreach (GroupModel oneSubNode in oneNode.children)
+                        foreach (GroupTreeModel oneSubNode in oneNode.children)
                         {
                             if (oneSubNode.id == groupNode.parentId)
                             {
                                 if (oneSubNode.children == null)
                                 {
-                                    oneSubNode.children = new List<GroupModel>();
+                                    oneSubNode.children = new List<GroupTreeModel>();
                                 }
                                 oneSubNode.children.Add(groupNode);
                                 doAdded = true;
@@ -102,13 +102,13 @@ namespace CPK_Project.Controllers
                             {
                                 if (oneSubNode.children != null)
                                 {
-                                    foreach (GroupModel oneSub2Node in oneSubNode.children)
+                                    foreach (GroupTreeModel oneSub2Node in oneSubNode.children)
                                     {
                                         if (oneSub2Node.id == groupNode.parentId)
                                         {
                                             if (oneSub2Node.children == null)
                                             {
-                                                oneSub2Node.children = new List<GroupModel>();
+                                                oneSub2Node.children = new List<GroupTreeModel>();
                                             }
                                             oneSub2Node.children.Add(groupNode);
                                             doAdded = true;
@@ -125,5 +125,34 @@ namespace CPK_Project.Controllers
 
         }
 
+        [Authorize]
+        public int Add(string groupName, string description, string parentGroup)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("GroupName", DbType.String, groupName, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("Description", DbType.String, description, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("ParentGroup", DbType.String, parentGroup, ParameterDirection.Input));
+
+                        int cnt = db.GetExecuteNonQuery(paraList, "CPK.uspGroupAdd");
+
+                        return cnt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return -1;
+        }
     }
 }

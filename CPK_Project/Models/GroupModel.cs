@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CPK_Project.Models
 {
-    public class GroupModel
+    public class GroupTreeModel
     {
         [Display(Name = "Group Name")]
         public string text { get; set; }
@@ -15,8 +15,40 @@ namespace CPK_Project.Models
 
         public int parentId { get; set; }
 
-        public List<GroupModel> children { get; set; }
+        public List<GroupTreeModel> children { get; set; }
     }
 
+    public class GroupModel
+    {
+        public string groupName { get; set; }
 
+        public string description { get; set; }
+
+        public string isActive { get; set; }
+
+        public int groupId { get; set; }
+
+    }
+
+    public class ChildGroupModel
+    {
+        public int groupId { get; set; }
+
+        public int childGroupId { get; set; }
+    }
+
+    public class ReportGroupModel
+    {
+        public int groupId { get; set; }
+
+        public int reportId { get; set; }
+    }
+
+    public class UserGroupModel
+    {
+        public int groupId { get; set; }
+
+        public string userId { get; set; }
+
+    }
 }
