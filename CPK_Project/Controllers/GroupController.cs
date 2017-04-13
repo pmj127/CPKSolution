@@ -128,6 +128,7 @@ namespace CPK_Project.Controllers
         [Authorize]
         public int Add(string groupName, string description, string parentGroup)
         {
+            int returnValue = -1;
 
             if (ModelState.IsValid)
             {
@@ -141,9 +142,8 @@ namespace CPK_Project.Controllers
                         paraList.Add(Common.GetParameter("Description", DbType.String, description, ParameterDirection.Input));
                         paraList.Add(Common.GetParameter("ParentGroup", DbType.String, parentGroup, ParameterDirection.Input));
 
-                        int cnt = db.GetExecuteNonQuery(paraList, "CPK.uspGroupAdd");
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupAdd");
 
-                        return cnt;
                     }
                 }
                 catch (Exception ex)
@@ -152,7 +152,152 @@ namespace CPK_Project.Controllers
                 }
             }
             // If we got this far, something failed, redisplay form
-            return -1;
+            return returnValue;
         }
+
+
+        [Authorize]
+        public int Remove(string selectedGroup)
+        {
+            int returnValue = -1;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("SelectedGroup", DbType.Int32, Convert.ToInt32(selectedGroup), ParameterDirection.Input));
+
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupRemove");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return returnValue;
+        }
+
+        [Authorize]
+        public int AddReport(string groupID, string reportID)
+        {
+            int returnValue = -1;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("GroupID", DbType.String, groupID, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("ReportID", DbType.String, reportID, ParameterDirection.Input));
+
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupReportAdd");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return returnValue;
+        }
+
+
+        [Authorize]
+        public int RemoveReport(string groupID, string reportID)
+        {
+            int returnValue = -1;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("GroupID", DbType.String, groupID, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("ReportID", DbType.String, reportID, ParameterDirection.Input));
+
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupReportRemove");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return returnValue;
+        }
+
+        [Authorize]
+        public int AddUser(string groupID, string userID)
+        {
+            int returnValue = -1;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("GroupID", DbType.String, groupID, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
+
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupUserAdd");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return returnValue;
+        }
+
+
+        [Authorize]
+        public int RemoveUser(string groupID, string userID)
+        {
+            int returnValue = -1;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (DBManager db = new DBManager())
+                    {
+
+                        List<SqlParameter> paraList = new List<SqlParameter>();
+                        paraList.Add(Common.GetParameter("GroupID", DbType.String, groupID, ParameterDirection.Input));
+                        paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
+
+                        returnValue = db.GetExecuteNonQuery(paraList, "CPK.uspGroupUserRemove");
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // If we got this far, something failed, redisplay form
+            return returnValue;
+        }
+
     }
 }

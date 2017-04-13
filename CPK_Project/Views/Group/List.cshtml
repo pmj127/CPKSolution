@@ -25,7 +25,7 @@
                     <table class="table table-striped table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
-                                <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
+                                <th data-column="ReportID" data-sort="true" data-align="center" data-action="grid_click">Report ID</th>
                                 <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
                                 <th data-column="ReportPath">Report Path</th>
                                 <th data-column="IsActive" data-align="center">Active</th>
@@ -52,8 +52,8 @@
                         <thead>
                             <tr>
                                 <th data-column="UserID">UserID</th>
-                                <th data-column="UserType" data-sort="true" data-align="center" data-action="grid_click">Type</th>
-                                <th data-column="FullName" data-sort="true" data-search="true" data-action="grid_click">Name</th>
+                                <th data-column="UserType" data-sort="true" data-align="center" data-action="grid2_click">Type</th>
+                                <th data-column="FullName" data-sort="true" data-search="true" data-action="grid2_click">Name</th>
                                 <th data-column="Account" data-sort="true" data-action="grid_click">Account ID</th>
                                 <th data-column="Status" data-sort="true" data-action="grid_click">Status</th>
                                 <th data-column="ModifyDate" data-sort="true" data-align="center" data-action="grid_click">Modify Date</th>
@@ -101,7 +101,7 @@
         </div>
     </div>
 </div>
-<div id="removeGroupPop" class="modal fade" role="dialog" style="padding-top: 15%;">
+<div id="removeGroupPop" class="modal fade" role="dialog" style="padding-top: 20%;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,41 +111,163 @@
             <div class="modal-body">
                 <form id="formRemoveGoup">
                     <div class="form-group">
-                        <label for="selGroupRemove" class="control-label">Parent Group:</label>
+                        <label for="selGroupRemove" class="control-label">Group name:</label>
                         <select id="selGroupRemove"></select>
                     </div>
-                    <div class="form-group">
-                        <label for="txtGroupNameRemove" class="control-label">Group Name:</label>
-                        <input type="text" class="form-control" id="txtGroupNameRemove">
-                    </div>
-                    <div class="form-group">
-                        <label for="txtDescriptionRemove" class="control-label">Description:</label>
-                        <input type="text" class="form-control" id="txtDescriptionRemove">
-                    </div>
-
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="formAddGoupSave">Remove</button>
+                <button type="button" class="btn btn-primary" id="formRemoveGoupSave">Remove</button>
             </div>
         </div>
     </div>
 </div>
-<div id="addReportPop" class="modal fade" role="dialog" >
-
+<div id="addReportPop" class="modal fade" role="dialog" style="padding-top: 15%;" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Add Report</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formAddReport">
+                    <div class="form-group">
+                        <label for="selGroupReport" class="control-label">Group:</label>
+                        <select id="selGroupReport"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selReport" class="control-label">Report:</label>
+                        <select id="selReport"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="formAddReportSave">Add</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="removeReportPop" class="modal fade" role="dialog"  >
-
+<div id="removeReportPop" class="modal fade" role="dialog"  style="padding-top: 15%;" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Remove Report</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formRemoveReport">
+                    <div class="form-group">
+                        <label for="selGroupReportRemove" class="control-label">Group:</label>
+                        <select id="selGroupReportRemove"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selReportRemove" class="control-label">Report:</label>
+                        <select id="selReportRemove"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="formRemoveReportSave">Remove</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="addUserPop" class="modal fade" role="dialog"  >
-
+<div id="addUserPop" class="modal fade" role="dialog" style="padding-top: 15%;"  >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formAddUser">
+                    <div class="form-group">
+                        <label for="selGroupUser" class="control-label">Group:</label>
+                        <select id="selGroupUser"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selUser" class="control-label">Report:</label>
+                        <select id="selUser"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="formAddUserSave">Add</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="removeUserPop" class="modal fade" role="dialog"  >
-
+<div id="removeUserPop" class="modal fade" role="dialog" style="padding-top: 15%;"  >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Remove Report</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formRemoveUser">
+                    <div class="form-group">
+                        <label for="selGroupUserRemove" class="control-label">Group:</label>
+                        <select id="selGroupUserRemove"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selUserRemove" class="control-label">Report:</label>
+                        <select id="selUserRemove"></select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="formRemoveUserSave">Remove</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <script type="text/javascript">
+
+    $(document).ready(init);
+
+    function init() {
+        reloadTree();
+        jsTreeSelected();
+        $('#formAddGoupSave').on('click', formAddGoupSave_click);
+        $('#formRemoveGoupSave').on('click', formRemoveGoupSave_click);
+        $('#formAddReportSave').on('click', formAddReportSave_click);
+        $('#formRemoveReportSave').on('click', formRemoveReportSave_click);
+        $('#formAddUserSave').on('click', formAddUserSave_click);
+        $('#formRemoveUserSave').on('click', formRemoveUserSave_click);
+
+        $('#addGroupPop').on('show.bs.modal', function (event) {
+            setGroupSelect("selGroup");
+            $("#txtGroupName").val("");
+            $("#txtDescription").val("");
+        });
+
+        $('#removeGroupPop').on('show.bs.modal', function (event) {
+            setGroupSelect("selGroupRemove");
+        });
+
+        $("#addReportPop").on('show.bs.modal', function (event) {
+            setGroupSelect("selGroupReport");
+            setReportSelect("selReport");
+        });
+
+        $("#removeReportPop").on('show.bs.modal', function (event) {
+            setGroupSelect("selGroupReportRemove");
+            setReportSelect("selReportRemove");
+        });
+
+        $("#addUserPop").on('show.bs.modal', function (event) {
+            setGroupSelect("selGroupUser");
+            setUserSelect("selUser");
+        });
+
+        $("#removeUserPop").on('show.bs.modal', function (event) {
+            setGroupSelect("selGroupUserRemove");
+            setUserSelect("selUserRemove");
+        });
+    }
 
     $(function () {
         $("#grid").moonGrid({
@@ -164,19 +286,9 @@
         });
     });
 
-    function grid_click(event)
-    {
-        //event.data.row has all row information such as ReportID, ReportName, and so on
-        //alert(event.data.row.ReportID);
-        //window.location.href = "/ReportView/Details?id=" + event.data.row.ReportID;
+    function grid_click(event) {
         window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
-        //window.location.href = "@Url.Action("Details", "ReportView", new { id = "reportId" })".replace("reportId", event.data.row.ReportID);
     }
-    //function grid_radio_click(event) {
-    //    //event.data.row has all row information such as ReportID, ReportName, and so on
-    //    //alert(event.data.row.ReportID);
-    //    window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
-    //}
 
     $(function () {
         $("#grid2").moonGrid({
@@ -195,18 +307,10 @@
         });
     });
 
-    function grid_click(event) {
+    function grid2_click(event) {
         window.location.href = "/Account/UserInfo?id=" + event.data.row.UserID;
     }
 
-    $(document).ready(init);
-
-    function init() {
-        reloadTree();
-        jsTreeSelected();
-        $('#formAddGoupSave').on('click', formAddGoupSave_click);
-
-    }
 
     function formAddGoupSave_click() {
         $.ajax({
@@ -216,24 +320,157 @@
                 GroupName: $("#txtGroupName").val(),
                 Description: $("#txtDescription").val(),
                 ParentGroup: $("#selGroup").val()
+            },
+            error: function () {
+                console.error("formAddGoupSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+                $('#groupTree').jstree(true).refresh();
+                setGroupSelect("selGroup");
             }
-        }).done(function (html) {
-            reloadTree();
         });
+    }
 
+    function formRemoveGoupSave_click() {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("Remove", "Group")",
+            data: {
+                SelectedGroup: $("#selGroupRemove").val()
+            },
+            error: function () {
+                console.error("formRemoveGoupSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+                $('#groupTree').jstree(true).refresh();
+                setGroupSelect("selGroupRemove");
+            }
+        });
+    }
+
+    function formAddReportSave_click() {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("AddReport", "Group")",
+            data: {
+                GroupID: $("#selGroupReport").val(),
+                ReportID: $("#selReport").val()
+            },
+            error: function () {
+                console.error("formAddReportSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+                //setGroupSelect("selGroup");
+            }
+        });
+    }
+
+    function formRemoveReportSave_click() {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("RemoveReport", "Group")",
+            data: {
+                GroupID: $("#selGroupReportRemove").val(),
+                ReportID: $("#selReportRemove").val()
+            },
+            error: function () {
+                console.error("formRemoveReportSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+            }
+        });
+    }
+
+    function formAddUserSave_click() {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("AddUser", "Group")",
+            data: {
+                GroupID: $("#selGroupUser").val(),
+                UserID: $("#selUser").val()
+            },
+            error: function () {
+                console.error("formAddUserSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+            }
+        });
+    }
+    function formRemoveUserSave_click() {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Action("RemoveUser", "Group")",
+            data: {
+                GroupID: $("#selGroupUserRemove").val(),
+                UserID: $("#selUserRemove").val()
+            },
+            error: function () {
+                console.error("formAddUserpSave_click ERROR");
+            },
+            success: function (data) {
+                $(".close").click();
+            }
+        });
+    }
+
+    function setReportSelect(name) {
+        $.ajax({
+            method: "POST", 
+            url: "@Url.Action("GetListByGroup", "ReportView")",
+            data: {
+                filterText: 0
+            },
+            error: function () {
+                console.error("setReportSelect ERROR");
+            },
+            success: function (data) {
+                var dataArr = data.Rows;
+                $("#" + name).empty();
+                i = 0;
+                $(dataArr).each(function (index, o) {
+                    var $option = $("<option/>").attr("value", o.ReportID).text(o.ReportID + ": " + o.ReportName);
+                    $("#" + name).append($option);
+                    i++;
+                });
+            }
+        });
+    }
+
+    function setUserSelect(name) {
+        $.ajax({
+            method: "POST", 
+            url: "@Url.Action("GetListByGroup", "Account")",
+            data: {
+            filterText: 0
+            },
+            error: function () {
+                console.error("setUserSelect ERROR");
+            },
+            success: function (data) {
+                var dataArr = data.Rows;
+                $("#" + name).empty();
+                i = 0;
+                $(dataArr).each(function (index, o) {
+                    var $option = $("<option/>").attr("value", o.UserID).text(o.UserID + ": " + o.FullName);
+                    $("#" + name).append($option);
+                    i++;
+                });
+            }
+        });
     }
 
     function setGroupSelect(name) {
         var treeData = $('#groupTree').jstree(true).get_json('#', { flat: true });
-        if ($("#" + name).size() <= 1)
-        {
-            $(treeData).each(function (index, o) {
-                var $option = $("<option/>").attr("value", o.id).text(o.text);
-                $("#" + name).append($option);
-            });
-            return true;
-        }
-
+        $("#" + name).empty();
+        $(treeData).each(function (index, o) {
+            var $option = $("<option/>").attr("value", o.id).text(o.text);
+            $("#" + name).append($option);
+        });
     }
 
     function jsTreeSelected() {
@@ -243,12 +480,10 @@
                 r.push(data.instance.get_node(data.selected[i]).id);
             }
             var selId = r.join(', ');
-            //console.info("r.join(', '):" + selId);
             $("#gridFilterTextHidden").val(selId);
             $("#gridRefresh").trigger("click");
             $("#grid2FilterTextHidden").val(selId);
             $("#grid2Refresh").trigger("click");
-            //setGroupSelect();
         }).jstree();
 
     }
@@ -259,23 +494,15 @@
                 'data': {
                     'url': "@Url.Action("GetList", "Group")",
                     'data': function (arg) {
-                        arg = arg;
+                        console.info(arg);
                         return { 'UserId': 0, 'GroupId': 0 };
                     }
                 }
             }
         });
 
-
     }
 
-    $('#addGroupPop').on('show.bs.modal', function (event) {
-        setGroupSelect("selGroup");
-    })
-
-    $('#removeGroupPop').on('show.bs.modal', function (event) {
-        setGroupSelect("selGroupRemove");
-    })
 
 </script>
 
