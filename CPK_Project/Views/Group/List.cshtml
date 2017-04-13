@@ -25,6 +25,7 @@
                     <table class="table table-striped table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
+                                <th data-input-type="checkbox" data-input-value="ReportID"></th>
                                 <th data-column="ReportID"  data-align="center">Report ID</th>
                                 <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
                                 <th data-column="ReportPath">Report Path</th>
@@ -41,7 +42,7 @@
                         data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList">
                     Add Report to Group
                 </button>
-                <button type="button" class="btn btn-danger" id="btnRemoveReportGroup" data-toggle="modal" data-target="#removeReportPop">Remove Report from Group</button>
+                <button type="button" class="btn btn-danger" id="btnRemoveReportGroup" >Remove Report from Group</button>
             </div>
 
         </div>
@@ -54,6 +55,7 @@
                     <table class="table table-striped table-bordered table-condensed table-hover">
                         <thead>
                             <tr>
+                                <th data-input-type="checkbox" data-input-value="UserID"></th>
                                 <th data-column="UserID">UserID</th>
                                 <th data-column="UserType" data-sort="true" data-align="center">Type</th>
                                 <th data-column="FullName" data-sort="true" data-search="true" data-action="grid2_click">Name</th>
@@ -71,7 +73,7 @@
                         data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList">
                     Add User to Group
                 </button>
-                <button type="button" class="btn btn-danger" id="btnRemoveUserGroup"  data-toggle="modal" data-target="#removeUserPop">Remove User from Group</button>
+                <button type="button" class="btn btn-danger" id="btnRemoveUserGroup"  >Remove User from Group</button>
             </div>
         </div>
 
@@ -254,25 +256,27 @@
             setGroupSelect("selGroupRemove");
         });
 
-        $("#addReportPop").on('show.bs.modal', function (event) {
-            setGroupSelect("selGroupReport");
-            setReportSelect("selReport");
-        });
+        $("#btnRemoveReportGroup").click(DeleteReportGroup);
+        $("#btnRemoveUserGroup").click(DeleteUserGroup);
+        //$("#addReportPop").on('show.bs.modal', function (event) {
+        //    setGroupSelect("selGroupReport");
+        //    setReportSelect("selReport");
+        //});
 
-        $("#removeReportPop").on('show.bs.modal', function (event) {
-            setGroupSelect("selGroupReportRemove");
-            setReportSelect("selReportRemove");
-        });
+        //$("#removeReportPop").on('show.bs.modal', function (event) {
+        //    setGroupSelect("selGroupReportRemove");
+        //    setReportSelect("selReportRemove");
+        //});
 
-        $("#addUserPop").on('show.bs.modal', function (event) {
-            setGroupSelect("selGroupUser");
-            setUserSelect("selUser");
-        });
+        //$("#addUserPop").on('show.bs.modal', function (event) {
+        //    setGroupSelect("selGroupUser");
+        //    setUserSelect("selUser");
+        //});
 
-        $("#removeUserPop").on('show.bs.modal', function (event) {
-            setGroupSelect("selGroupUserRemove");
-            setUserSelect("selUserRemove");
-        });
+        //$("#removeUserPop").on('show.bs.modal', function (event) {
+        //    setGroupSelect("selGroupUserRemove");
+        //    setUserSelect("selUserRemove");
+        //});
     }
 
     $(function () {
@@ -513,6 +517,153 @@
     }
 
 
+</script>
+<script type="text/javascript">
+    var DeleteReportGroup = function () {
+        var gridID = "grid";
+
+        var list = $("#" + gridID + " input[name=" + gridID + "checkbox]:checked");
+        if (list.length == 0)
+        {
+            modalMessage(gridID, "Warning", "You must select at least one report!", true);
+            modalShow(gridID, true);
+            return;
+        }
+
+        //progressing screen show
+        modalMessage(gridID, "Progressing", "", false);
+        modalShow(gridID, true);
+
+        //make json data
+        var jsonData = [];
+        list.each(function () {
+            jsonData.push({
+                GroupID: groupID,
+                ReportID: $(this).data("value")
+            })
+        });
+        //alert(JSON.stringify(jsonData));
+
+        //call ajax
+        var ajaxSetting = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "@Url.Action("DeleteReportGroup", "Common")",
+            async: true,
+        timeout: 30000,
+        data: JSON.stringify(jsonData),
+        success: function (data, status, jqXHR) {
+            if (data.ErrorMessage != null) {
+                modalMessage(gridID, "Error", data.ErrorMessage, true);
+                modalShow(gridID, true);
+                return;
+            }
+            $("#gridRefresh").trigger("click");
+            modalMessage(gridID, "Success", "Successfully, reports were deleted!", true);
+            //$("#" + gridID + "Refresh").trigger("click");
+            //$("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
+        },
+        error: function (xhr, status, errorThrown) {
+            var errText = "";
+            if (xhr.status == 403) {
+                errText = "You do not have an appropriate permissions!"
+            }
+            else {
+                switch (status) {
+                    case "timeout":
+                        errText = "Request timed out";
+                        break;
+                    case "error":
+                        errText = errorThrown;
+                        break;
+                    case "abort":
+                        errText = "Request aborted";
+                        break;
+                    case "parsererror":
+                        errText = "Parser error";
+                        break;
+                }
+            }
+            modalMessage(gridID, "Error", errText, true);
+            modalShow(gridID, true);
+        }
+    }
+    $.ajax(ajaxSetting);
+}
+    var DeleteUserGroup = function () {
+        var gridID = "grid2";
+
+        var list = $("#" + gridID + " input[name=" + gridID + "checkbox]:checked");
+        if (list.length == 0)
+        {
+            modalMessage(gridID, "Warning", "You must select at least one user!", true);
+            modalShow(gridID, true);
+            return;
+        }
+
+        //progressing screen show
+        modalMessage(gridID, "Progressing", "", false);
+        modalShow(gridID, true);
+
+        //make json data
+        var jsonData = [];
+        list.each(function () {
+            jsonData.push({
+                GroupID: groupID,
+                UserID: $(this).data("value")
+            })
+        });
+        //alert(JSON.stringify(jsonData));
+
+        //call ajax
+        var ajaxSetting = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "@Url.Action("DeleteUserGroup", "Common")",
+            async: true,
+        timeout: 30000,
+        data: JSON.stringify(jsonData),
+        success: function (data, status, jqXHR) {
+            if (data.ErrorMessage != null) {
+                modalMessage(gridID, "Error", data.ErrorMessage, true);
+                modalShow(gridID, true);
+                return;
+            }
+            $("#grid2Refresh").trigger("click");
+            modalMessage(gridID, "Success", "Successfully, users were deleted!", true);
+            //$("#" + gridID + "Refresh").trigger("click");
+            //$("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
+        },
+        error: function (xhr, status, errorThrown) {
+            var errText = "";
+            if (xhr.status == 403) {
+                errText = "You do not have an appropriate permissions!"
+            }
+            else {
+                switch (status) {
+                    case "timeout":
+                        errText = "Request timed out";
+                        break;
+                    case "error":
+                        errText = errorThrown;
+                        break;
+                    case "abort":
+                        errText = "Request aborted";
+                        break;
+                    case "parsererror":
+                        errText = "Parser error";
+                        break;
+                }
+            }
+            modalMessage(gridID, "Error", errText, true);
+            modalShow(gridID, true);
+        }
+    }
+    $.ajax(ajaxSetting);
+}
+    
 </script>
 <script type="text/javascript">
     var groupID = 0;

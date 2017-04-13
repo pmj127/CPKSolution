@@ -42,6 +42,31 @@ namespace CPK_Project.Controllers
             }
 
         }
+        [HttpPost]
+        [AJaxAuthorize(Roles = "Admin")]
+        public JsonResult DeleteReportGroup(List<ReportGroup> reportGroups)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+                    int result = 0;
+                    string procedureName = "CPK.uspReportGroupDelete";
+                    List<List<SqlParameter>> paraList = Common.ListToParameters<ReportGroup>(reportGroups);
+
+                    result = db.GetExecuteNonQuery(paraList, procedureName);
+
+                    return Json("Success", JsonRequestBehavior.DenyGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
 
         [HttpPost]
         [AJaxAuthorize(Roles = "Admin")]
@@ -53,6 +78,31 @@ namespace CPK_Project.Controllers
                 {
                     int result = 0;
                     string procedureName = "CPK.uspUserGroupInsert";
+                    List<List<SqlParameter>> paraList = Common.ListToParameters<UserGroup>(UserGroups);
+
+                    result = db.GetExecuteNonQuery(paraList, procedureName);
+
+                    return Json("Success", JsonRequestBehavior.DenyGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+        [HttpPost]
+        [AJaxAuthorize(Roles = "Admin")]
+        public JsonResult DeleteUserGroup(List<UserGroup> UserGroups)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+                    int result = 0;
+                    string procedureName = "CPK.uspUserGroupDelete";
                     List<List<SqlParameter>> paraList = Common.ListToParameters<UserGroup>(UserGroups);
 
                     result = db.GetExecuteNonQuery(paraList, procedureName);
