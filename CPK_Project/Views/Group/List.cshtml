@@ -9,14 +9,14 @@
 <div class="row"  style="margin-top: 5px;">
     <div class="col-sm-3 col-md-3 sidebar">
         <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; text-align: center; border-top: 0px;">
-            <button type="button" class="btn btn-info" id="btnAddGroup" data-toggle="modal" data-target="#addGroupPop">Add Group</button>
-            <button type="button" class="btn btn-danger" id="btnRemoveGroup" data-toggle="modal" data-target="#removeGroupPop">Remove Group</button>
+            <button type="button" class="btn btn-info" id="btnAddGroup" data-toggle="modal" data-target="#addGroupPop">Add</button>
+            <button type="button" class="btn btn-danger" id="btnRemoveGroup" data-toggle="modal" data-target="#removeGroupPop">Remove</button>
         </div>
         <div id="groupTree" style="min-width:300px;">
         </div>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main"  style="margin-top: 5px; padding-top: 5px;">
-        <h2 style="margin-top: 5px;">CPK Solution</h2>
+        <h2 style="margin-top: 5px;">Manage: <span id="spanTitle">Root</span> Group</h2>
         <hr />
         <div class="upperPane" stlye="">
             <h3>Report List</h3>
@@ -37,7 +37,11 @@
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; border-top: 0px;">
-                <button type="button" class="btn btn-info" id="btnAddReportGroup"  data-toggle="modal" data-target="#addReportPop">Add Report to Group</button>
+                <button type="button" id="btnReportsModal" class="btn btn-primary" data-toggle="modal"
+                        data-target="#ReportsModal" data-backdrop="static" data-keyboard="false"
+                        data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList">
+                    Add Report to Group
+                </button>
                 <button type="button" class="btn btn-danger" id="btnRemoveReportGroup" data-toggle="modal" data-target="#removeReportPop">Remove Report from Group</button>
             </div>
 
@@ -64,7 +68,11 @@
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; border-top: 0px;">
-                <button type="button" class="btn btn-info" id="btnAddUserGroup" data-toggle="modal" data-target="#addUserPop">Add User to Group</button>
+                <button type="button" id="btnUsersModal" class="btn btn-primary" data-toggle="modal"
+                        data-target="#UsersModal" data-backdrop="static" data-keyboard="false"
+                        data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList">
+                    Add User to Group
+                </button>
                 <button type="button" class="btn btn-danger" id="btnRemoveUserGroup"  data-toggle="modal" data-target="#removeUserPop">Remove User from Group</button>
             </div>
         </div>
@@ -480,6 +488,10 @@
                 r.push(data.instance.get_node(data.selected[i]).id);
             }
             var selId = r.join(', ');
+
+            groupID = data.node.id;
+            $("#spanTitle").text(data.node.text);
+
             $("#gridFilterTextHidden").val(selId);
             $("#gridRefresh").trigger("click");
             $("#grid2FilterTextHidden").val(selId);
@@ -505,7 +517,187 @@
 
 
 </script>
+<script type="text/javascript">
+    var groupID = 0;
 
+    ///moongrid modal
+    function modalMessage(gridID,title, body, footer) {
+        if (footer)
+            $('#' + gridID + 'Modal .modal-footer').show();
+        else
+            $('#' + gridID + 'Modal .modal-footer').hide();
+
+        $('#' + gridID + 'Modal .modal-title').text(title);
+        var modalbody = $('#' + gridID + 'Modal .modal-body');
+        modalbody.children().remove();
+        if (body == "")
+            modalbody.append('<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span class="sr-only">Please wait for a while...</span></div></div>');
+        else
+            modalbody.append('<p>' + body + '</p>');
+    }
+    function modalShow(gridID, status) {
+        if (status)
+            $('#' + gridID + 'Modal').modal({ show: true, backdrop: 'static', keyboard: false });
+        else
+            $('#' + gridID + 'Modal').modal('hide');
+    }
+
+    function GetUserGroupList() {
+        //to refresh grid
+        $("#grid2Refresh").trigger("click");
+    }
+
+    var SetUserGroup = function (event) {
+        var gridID = event.data.id;
+
+        var list = $("#" + gridID + " input[name=" + gridID + "checkbox]:checked");
+        if (list.length == 0)
+        {
+            modalMessage(gridID, "Warning", "You must select at least one user!", true);
+            modalShow(gridID, true);
+            return;
+        }
+
+        //progressing screen show
+        modalMessage(gridID, "Progressing", "", false);
+        modalShow(gridID, true);
+
+        //make json data
+        var jsonData = [];
+        list.each(function () {
+            jsonData.push({
+                GroupID: groupID,
+                UserID: $(this).data("value")
+            })
+        });
+        //alert(JSON.stringify(jsonData));
+
+        //call ajax
+        var ajaxSetting = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "@Url.Action("SetUserGroup", "Common")",
+            async: true,
+            timeout: 30000,
+            data: JSON.stringify(jsonData),
+            success: function (data, status, jqXHR) {
+                if (data.ErrorMessage != null) {
+                    modalMessage(gridID, "Error", data.ErrorMessage, true);
+                    modalShow(gridID, true);
+                    return;
+                }
+                modalMessage(gridID, "Success", "Successfully, Users were selected", true);
+                $("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
+            },
+            error: function (xhr, status, errorThrown) {
+                var errText = "";
+                if (xhr.status == 403) {
+                    errText = "You do not have an appropriate permissions!"
+                }
+                else {
+                    switch (status) {
+                        case "timeout":
+                            errText = "Request timed out";
+                            break;
+                        case "error":
+                            errText = errorThrown;
+                            break;
+                        case "abort":
+                            errText = "Request aborted";
+                            break;
+                        case "parsererror":
+                            errText = "Parser error";
+                            break;
+                    }
+                }
+                modalMessage(gridID, "Error", errText, true);
+                modalShow(gridID, true);
+            }
+        }
+        $.ajax(ajaxSetting);
+    }
+</script>
+<script type="text/javascript">
+
+    function GetReportGroupList(){
+        //alert("close");
+        $("#gridRefresh").trigger("click");
+    }
+
+    var SetReportGroup = function (event) {
+        var gridID = event.data.id;
+
+        var list = $("#" + gridID + " input[name=" + gridID + "checkbox]:checked");
+        if (list.length == 0)
+        {
+            modalMessage(gridID, "Warning", "You must select at least one report!", true);
+            modalShow(gridID, true);
+            return;
+        }
+
+        //progressing screen show
+        modalMessage(gridID, "Progressing", "", false);
+        modalShow(gridID, true);
+
+        //make json data
+        var jsonData = [];
+        list.each(function () {
+            jsonData.push({
+                GroupID: groupID,
+                ReportID: $(this).data("value")
+            })
+        });
+        //alert(JSON.stringify(jsonData));
+
+        //call ajax
+        var ajaxSetting = {
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            method: "POST",
+            url: "@Url.Action("SetReportGroup", "Common")",
+            async: true,
+            timeout: 30000,
+            data: JSON.stringify(jsonData),
+            success: function (data, status, jqXHR) {
+                if (data.ErrorMessage != null) {
+                    modalMessage(gridID, "Error", data.ErrorMessage, true);
+                    modalShow(gridID, true);
+                    return;
+                }
+                modalMessage(gridID, "Success", "Successfully, reports were selected!", true);
+                $("#" + gridID + " input[name=" + gridID + "checkbox]:checked").prop("checked", false);
+            },
+            error: function (xhr, status, errorThrown) {
+                var errText = "";
+                if (xhr.status == 403) {
+                    errText = "You do not have an appropriate permissions!"
+                }
+                else {
+                    switch (status) {
+                        case "timeout":
+                            errText = "Request timed out";
+                            break;
+                        case "error":
+                            errText = errorThrown;
+                            break;
+                        case "abort":
+                            errText = "Request aborted";
+                            break;
+                        case "parsererror":
+                            errText = "Parser error";
+                            break;
+                    }
+                }
+                modalMessage(gridID, "Error", errText, true);
+                modalShow(gridID, true);
+            }
+        }
+        $.ajax(ajaxSetting);
+    }
+</script>
+@Html.Partial("_ReportListPartial")
+@Html.Partial("_UserListPartial")
 @section Scripts {
     @Styles.Render("~/Content/moonGrid")
     @Scripts.Render("~/bundles/moonGrid")
