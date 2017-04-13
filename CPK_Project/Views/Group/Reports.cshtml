@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="row" style="margin-top: 5px;">
+    <div id="grid" style="min-width:600px;">
+        <div>
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
+                        <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
+                        <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
+                        <th data-column="ReportPath">Report Path</th>
+                        <th data-column="IsActive" data-align="center">Active</th>
+                        <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(init);
+
+    function init() {
+    }
+
+
+    $(function () {
+        $("#grid").moonGrid({
+            pageNo: 1,
+            pageSize: 10,
+            searchText: null,
+            filterText: null,
+            orderColumn: null,
+            orderDesc: null,
+            //url: "/ReportView/GetList",
+            url:"@Url.Action("GetUserList", "ReportView")",
+            sync: true,
+            showPager: true,
+            showSort: true,
+            showSearcher: true,
+            showModal: false
+        });
+    });
+
+    function grid_click(event)
+    {
+
+        window.location.href = "@Url.Action("Details", "ReportView", new { id = "reportId" })".replace("reportId", event.data.row.ReportID);
+    }
+    function grid_radio_click(event) {
+
+        window.location.href = "/ReportView/Index?ReportID=" + event.data.row.ReportID + "&width=100&height=650";
+    }
+
+
+
+</script>
+
+@Html.Partial("_UserListPartial")
+@Html.Partial("_ReportListPartial")
+
+@section Scripts {
+    @Styles.Render("~/Content/moonGrid")
+    @Scripts.Render("~/bundles/moonGrid")
+}

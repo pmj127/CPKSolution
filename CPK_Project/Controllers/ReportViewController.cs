@@ -101,6 +101,46 @@ namespace CPK_Project.Controllers
 
 
         [HttpPost]
+        [AJaxAuthorize]
+        public JsonResult GetUserList(int pageNo, int pageSize, string searchText, string filterText, string orderColumn, string orderDesc)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+
+                    string procedureName = "CPK.uspReportUserList";
+                    string userID = User.Identity.Name;
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("IsActive", DbType.String, filterText, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
+                    if (orderColumn != null && orderColumn.Length != 0)
+                    {
+                        paraList.Add(Common.GetParameter("Sort", DbType.String, orderColumn + orderDesc, ParameterDirection.Input));
+                        procedureName = "CPK.uspReportUserListSort";
+                    }
+
+                    DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                    ListViewModel<ReportAdmin> listView = Common.DataToClass<ListViewModel<ReportAdmin>>(DbSet.Tables[0].Rows[0]);
+                    List<ReportAdmin> reportList = Common.DataToList<ReportAdmin>(DbSet.Tables[1]);
+                    listView.Rows = reportList;
+                    return Json(listView, JsonRequestBehavior.DenyGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+
+
+        [HttpPost]
         [Authorize]
         public JsonResult GetListByGroup(string filterText)
         {
@@ -111,9 +151,6 @@ namespace CPK_Project.Controllers
 
                     string procedureName = "CPK.uspReportListByGroup";
                     List<SqlParameter> paraList = new List<SqlParameter>();
-                   // paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
-                   // paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
-                   // paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("GroupId", DbType.String, Convert.ToInt32(filterText), ParameterDirection.Input));
 
                     DataSet DbSet = db.GetSelectQuery(paraList, procedureName);

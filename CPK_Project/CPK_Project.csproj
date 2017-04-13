@@ -321,6 +321,7 @@
     <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Send.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Group\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
