@@ -19,6 +19,13 @@ namespace CPK_Project.Controllers
     {
 
         [Authorize]
+        public ActionResult Reports()
+        {
+            return View();
+
+        }
+
+        [Authorize]
         public ActionResult List()
         {
             return View();
