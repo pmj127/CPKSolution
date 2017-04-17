@@ -753,7 +753,7 @@
             <Top>0.905in</Top>
             <Left>1.2175in</Left>
             <Height>1.25in</Height>
-            <Width>4.77083in</Width>
+            <Width>4.77084in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -778,10 +778,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>0.39645in</Top>
-            <Left>2.92448in</Left>
+            <Top>0.52145in</Top>
+            <Left>4.42448in</Left>
             <Height>0.38417in</Height>
-            <Width>1.9727in</Width>
+            <Width>1.57687in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -793,6 +793,21 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Image Name="logo">
+            <Source>Embedded</Source>
+            <Value>Logo</Value>
+            <Sizing>FitProportional</Sizing>
+            <Top>0.44729in</Top>
+            <Left>1.2175in</Left>
+            <Height>0.42994in</Height>
+            <Width>0.95833in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
         </ReportItems>
         <Height>3.05208in</Height>
         <Style />
@@ -837,6 +852,13 @@
       </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="Logo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAAGoAAAAvCAYAAAALtF9IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL4SURBVHhe7Zm9buJAEIDvSfIgPEHaNNelO9FQXbpIFLnqmlRIiCZuQncSRahoIgokREMaKJCQUkDlBlEAtvHP3PgvNvbagVPweo4Z6VNgvbsy+3m8Y+fb5uYKmPLDoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoohQQlEV2P2ugfbo8gN2VVGfy6M8on7eg/muggMAjtoHo4WiWm2wVA0cYw32cg6mIhiH6J0XMGcqjozCWfbBHA3B3uBnb/wQ9q1r4XiXndIWz9G5i/o1mmAOxmCvpvi3DXr9cI5zUgpRW6UPthGszqoP+sHxW9gvNe+Q/RpvT/A69/qE4Uwe/PbnsSffDw3sQWzhk2TN8QGey/sU9r/ibcUgX1T9TyQJw36tpPtUn8DCPv8k6gbnD9r8wIVOjg3JFeVeMAuwFMH5FYB0UcbMzxY/VDAfxf200eKLRK1xsRNjQzLnqIA+mUuT5CJZ1ANYuIdEMc++2qv3oDcE7SFnE4WS8CJxVj3QRGMKQq6oeu9wEY0xGKJ+x3C0qNNufRq2+XucBlbnUjNKGcY2eozNMFFInECWqE68mMB9bnRCMaFiJgWfvVDlZdX/K2r25Jf3wa3V2WB5363BVjQ25DNRblZ1L7GYaCVE5d2WPkMkyntovoWdqL+IVFY2sdILvoSRenwoBsnFBJbdwe/3I6eYwPJYb30XtAekFjnco05ANEcDn/GC737IySrJoir4ABn8fi+yK7Jtdwp23uKfS1TqHDEkZJVkUUhin7LfBJt91S/jcxf/bKKwPZVVAFav2KySLwqJSmAMt0Q/eBF7DcZk7R2SJsrLqviDOUbBWVUKUS5bt0Jb+kJghUXFs/tStgkm
+tvkvVRdYWteEYzNfyg6wfdA8akHzX8regfEWu5iCsCcvsFdy9s0vpDSiIvjfHCJKKIoRwaKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKJIcAV/AXoXLVF+T2QCAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>75ba08cd-cd85-4fc5-9562-1e084f767775</rd:ReportID>
 </Report>

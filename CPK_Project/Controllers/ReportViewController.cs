@@ -32,7 +32,7 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(reportID), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name, ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("GroupCount", DbType.String, User.Identity.Name, ParameterDirection.Output));
-                    int result = Int16.Parse(db.GetExecuteNonQuery(paraList, procedureName, "GroupCount"));
+                    countGroup = Int16.Parse(db.GetExecuteNonQuery(paraList, procedureName, "GroupCount"));
                 }
             }
             else
@@ -56,8 +56,10 @@ namespace CPK_Project.Controllers
             {
                 TempData["message"] = "You do not have an authority for the report!";
                 TempData["messageType"] = "Error";
-                return Redirect(Request.UrlReferrer.ToString());
-                //return RedirectToAction(TempData["ActionName"].ToString(), TempData["ControllerName"].ToString());
+                if(Request.UrlReferrer != null)
+                    return Redirect(Request.UrlReferrer.ToString());
+                else
+                    return RedirectToAction("Index", "Home");
             }
 
         }

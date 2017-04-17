@@ -24,7 +24,7 @@ namespace CPK_Project.ReportView
                 {
                     try
                     {
-                        ReportModel report = new ReportModel();
+                        ReportsViewUser report = new ReportsViewUser();
                         using (DBManager db = new DBManager())
                         {
                             DataSet DbSet;
@@ -36,11 +36,11 @@ namespace CPK_Project.ReportView
                             {
                                 List<SqlParameter> list = new List<SqlParameter>();
                                 list.Add(Common.GetParameter("ReportID", DbType.Int32, Convert.ToInt32(Request["ReportID"])));
-                                list.Add(Common.GetParameter("UserID", DbType.String, Convert.ToInt32(User.Identity.Name)));
+                                list.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name));
                                 DbSet = db.GetSelectQuery(list, "CPK.uspGetReportInfoUser");
                             }
 
-                            report = Common.DataToClass<ReportModel>(DbSet.Tables[0].Rows[0]);
+                            report = Common.DataToClass<ReportsViewUser>(DbSet.Tables[0].Rows[0]);
                         }
 
 
@@ -52,10 +52,10 @@ namespace CPK_Project.ReportView
                         reportViewer.ServerReport.ReportServerUrl = new Uri(reportServer); 
                         reportViewer.ServerReport.ReportPath = report.ReportPath;
 
-                        //reportViewer.ServerReport.SetParameters(new ReportParameter("OrderNumber", "SO43659"));
                         try
                         {
-                            reportViewer.ServerReport.SetParameters(new ReportParameter("asdgd", "SO43659"));
+                            if(!report.UserType.Equals("Admin"))
+                                reportViewer.ServerReport.SetParameters(new ReportParameter("VenderID", report.Account.ToString()));
                         }
                         catch (Exception ex)
                         {

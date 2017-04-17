@@ -377,6 +377,9 @@
                                     <Parameter Name="PurchaseOrderID">
                                       <Value>=Fields!PurchaseOrderID.Value</Value>
                                     </Parameter>
+                                    <Parameter Name="VendorID">
+                                      <Value>=Parameters!VendorID.Value</Value>
+                                    </Parameter>
                                   </Parameters>
                                 </Drillthrough>
                               </Action>
@@ -874,7 +877,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>PurchaseOrderMonthly</DataSetName>
-            <Top>0.72792in</Top>
+            <Top>0.97792in</Top>
             <Left>0.49875in</Left>
             <Height>0.75in</Height>
             <Width>7in</Width>
@@ -901,8 +904,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox15</rd:DefaultName>
-            <Top>0.38417in</Top>
-            <Left>0.49875in</Left>
+            <Top>0.67931in</Top>
+            <Left>4.22792in</Left>
             <Height>0.29861in</Height>
             <Width>2.45833in</Width>
             <ZIndex>1</ZIndex>
@@ -934,7 +937,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Left>2.60292in</Left>
+            <Top>0.375in</Top>
+            <Left>4.22792in</Left>
             <Height>0.38417in</Height>
             <Width>3.30207in</Width>
             <ZIndex>2</ZIndex>
@@ -948,6 +952,21 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Image Name="logo">
+            <Source>Embedded</Source>
+            <Value>Logo</Value>
+            <Sizing>FitProportional</Sizing>
+            <Top>0.44444in</Top>
+            <Left>0.49875in</Left>
+            <Height>0.53348in</Height>
+            <Width>1.16667in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Image>
         </ReportItems>
         <Height>2in</Height>
         <Style />
@@ -999,6 +1018,13 @@
       </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="Logo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAAGoAAAAvCAYAAAALtF9IAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL4SURBVHhe7Zm9buJAEIDvSfIgPEHaNNelO9FQXbpIFLnqmlRIiCZuQncSRahoIgokREMaKJCQUkDlBlEAtvHP3PgvNvbagVPweo4Z6VNgvbsy+3m8Y+fb5uYKmPLDoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoojAoohQQlEV2P2ugfbo8gN2VVGfy6M8on7eg/muggMAjtoHo4WiWm2wVA0cYw32cg6mIhiH6J0XMGcqjozCWfbBHA3B3uBnb/wQ9q1r4XiXndIWz9G5i/o1mmAOxmCvpvi3DXr9cI5zUgpRW6UPthGszqoP+sHxW9gvNe+Q/RpvT/A69/qE4Uwe/PbnsSffDw3sQWzhk2TN8QGey/sU9r/ibcUgX1T9TyQJw36tpPtUn8DCPv8k6gbnD9r8wIVOjg3JFeVeMAuwFMH5FYB0UcbMzxY/VDAfxf200eKLRK1xsRNjQzLnqIA+mUuT5CJZ1ANYuIdEMc++2qv3oDcE7SFnE4WS8CJxVj3QRGMKQq6oeu9wEY0xGKJ+x3C0qNNufRq2+XucBlbnUjNKGcY2eozNMFFInECWqE68mMB9bnRCMaFiJgWfvVDlZdX/K2r25Jf3wa3V2WB5363BVjQ25DNRblZ1L7GYaCVE5d2WPkMkyntovoWdqL+IVFY2sdILvoSRenwoBsnFBJbdwe/3I6eYwPJYb30XtAekFjnco05ANEcDn/GC737IySrJoir4ABn8fi+yK7Jtdwp23uKfS1TqHDEkZJVkUUhin7LfBJt91S/jcxf/bKKwPZVVAFav2KySLwqJSmAMt0Q/eBF7DcZk7R2SJsrLqviDOUbBWVUKUS5bt0Jb+kJghUXFs/tStgkm
+tvkvVRdYWteEYzNfyg6wfdA8akHzX8regfEWu5iCsCcvsFdy9s0vpDSiIvjfHCJKKIoRwaKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKKIwKJIcAV/AXoXLVF+T2QCAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>3d3067a9-6af9-4e06-b5db-e46f2f4c9f84</rd:ReportID>
 </Report>

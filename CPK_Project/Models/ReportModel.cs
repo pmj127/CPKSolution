@@ -27,6 +27,11 @@ namespace CPK_Project.Models
         public string ReportPath { get; set; }
 
     }
+    public class ReportsViewUser : ReportModel
+    {
+        public int Account { get; set; }
+        public string UserType { get; set; }
+    }
 
     public class ReportsView : ReportModel
     {
