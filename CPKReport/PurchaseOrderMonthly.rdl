@@ -904,9 +904,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox15</rd:DefaultName>
-            <Top>0.67931in</Top>
+            <Top>0.72098in</Top>
             <Left>4.22792in</Left>
-            <Height>0.29861in</Height>
+            <Height>0.25694in</Height>
             <Width>2.45833in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -937,9 +937,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>0.375in</Top>
+            <Top>0.44444in</Top>
             <Left>4.22792in</Left>
-            <Height>0.38417in</Height>
+            <Height>0.30431in</Height>
             <Width>3.30207in</Width>
             <ZIndex>2</ZIndex>
             <Style>

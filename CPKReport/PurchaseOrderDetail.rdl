@@ -256,9 +256,9 @@ WHERE [PurchaseOrderID] = @PurchaseOrderID </CommandText>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox25</rd:DefaultName>
-            <Top>0.25in</Top>
+            <Top>0.35639in</Top>
             <Left>5.49479in</Left>
-            <Height>0.41542in</Height>
+            <Height>0.33209in</Height>
             <Width>2.59375in</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -982,7 +982,7 @@ WHERE [PurchaseOrderID] = @PurchaseOrderID </CommandText>
             <Source>Embedded</Source>
             <Value>Logo</Value>
             <Sizing>FitProportional</Sizing>
-            <Top>0.35639in</Top>
+            <Top>0.3946in</Top>
             <Left>0.37375in</Left>
             <Height>0.48958in</Height>
             <Width>1.09375in</Width>
