@@ -56,10 +56,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.07292in</Width>
+                  <Width>1.16407in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.9375in</Width>
+                  <Width>1.02865in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -440,7 +440,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.85417in</Size>
+                    <Size>1.94532in</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -478,7 +478,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.90625in</Size>
+                        <Size>0.9974in</Size>
                         <CellContents>
                           <Textbox Name="Textbox11">
                             <CanGrow>true</CanGrow>
@@ -534,7 +534,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>1.85417in</Size>
+                    <Size>1.94532in</Size>
                     <CellContents>
                       <Textbox Name="ReportName">
                         <CanGrow>true</CanGrow>
@@ -580,7 +580,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>0.90625in</Size>
+                        <Size>0.9974in</Size>
                         <CellContents>
                           <Textbox Name="ViewYear">
                             <CanGrow>true</CanGrow>
@@ -632,7 +632,7 @@
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.90625in</Size>
+                        <Size>0.9974in</Size>
                         <CellContents>
                           <Textbox Name="Textbox18">
                             <CanGrow>true</CanGrow>
@@ -672,7 +672,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.85417in</Size>
+                    <Size>1.94532in</Size>
                     <CellContents>
                       <Textbox Name="Textbox21">
                         <CanGrow>true</CanGrow>
@@ -709,7 +709,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>0.90625in</Size>
+                        <Size>0.9974in</Size>
                         <CellContents>
                           <Textbox Name="Textbox22">
                             <CanGrow>true</CanGrow>
@@ -750,10 +750,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>ReportViewCount</DataSetName>
-            <Top>0.905in</Top>
-            <Left>1.2175in</Left>
+            <Top>0.89111in</Top>
+            <Left>0.98833in</Left>
             <Height>1.25in</Height>
-            <Width>4.77084in</Width>
+            <Width>5.13542in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -798,7 +798,7 @@
             <Value>Logo</Value>
             <Sizing>FitProportional</Sizing>
             <Top>0.44729in</Top>
-            <Left>1.2175in</Left>
+            <Left>0.98833in</Left>
             <Height>0.42994in</Height>
             <Width>0.95833in</Width>
             <ZIndex>2</ZIndex>
