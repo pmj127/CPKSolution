@@ -8,15 +8,21 @@
 <link rel="stylesheet" href="~/Content/dashboard.css" />
 <div class="row"  style="margin-top: 5px;">
     <div class="col-sm-3 col-md-3 sidebar">
-        <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; text-align: center; border-top: 0px;">
-            <button type="button" class="btn btn-info" id="btnAddGroup" data-toggle="modal" data-target="#addGroupPop">Add</button>
-            <button type="button" class="btn btn-danger" id="btnRemoveGroup" data-toggle="modal" data-target="#removeGroupPop">Remove</button>
-        </div>
+        
         <div id="groupTree" style="min-width:300px;">
         </div>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main"  style="margin-top: 5px; padding-top: 5px;">
-        <h2 style="margin-top: 5px;">Manage: <span id="spanTitle">Root</span> Group</h2>
+    <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main" style="margin-top: 5px; padding-top: 5px;">
+        <h2 style="margin-top: 5px;">
+            Manage: <span id="spanTitle">Root</span> Group
+            <div class="modal-footer" style="margin-top: 5px; float:right; padding-top: 5px; text-align: center; border-top: 0px;">
+                <button type="button" class="btn btn-info" id="btnAddGroup" data-toggle="modal" data-target="#addGroupPop">Add</button>
+                <button type="button" class="btn btn-danger" id="btnRemoveGroup" data-toggle="modal" data-target="#removeGroupPop">Remove</button>   
+            </div>
+        </h2>
+        
+
+       
         <hr />
         <div class="upperPane" stlye="">
             <h3>Report List</h3>
