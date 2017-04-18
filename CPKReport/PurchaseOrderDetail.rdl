@@ -1830,7 +1830,11 @@ WHERE [PurchaseOrderID] = @PurchaseOrderID </CommandText>
           </Rectangle>
         </ReportItems>
         <Height>4.30208in</Height>
-        <Style />
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Body>
       <Width>8.41146in</Width>
       <Page>
