@@ -4,35 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+<script src="~/Scripts/dist/jstree.js"></script>
+<link rel="stylesheet" href="~/Scripts/dist/themes/default/style.css" />
+<link rel="stylesheet" href="~/Content/dashboard.css" />
 <div class="row" style="margin-top: 5px;">
-    <div id="grid" style="min-width:600px;">
-        <div>
-            <table class="table table-striped table-bordered table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
-                        <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
-                        <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
-                        <th data-column="ReportPath">Report Path</th>
-                        <th data-column="IsActive" data-align="center">Active</th>
-                        <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+    <div class="col-sm-3 col-md-3 sidebar">
+
+        <div id="groupTree" style="min-width:300px;">
+        </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main" style="margin-top: 5px; padding-top: 5px;">
+
+        <div class="row" style="margin-top: 5px;">
+            <div id="grid" style="min-width:600px;">
+                <div>
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
+                                <th data-column="ReportID" data-sort="true" data-align="center">Report ID</th>
+                                <th data-column="ReportName" data-sort="true" data-search="true" data-action="grid_click">Report Name</th>
+                                <th data-column="ReportPath">Report Path</th>
+                                <th data-column="IsActive" data-align="center">Active</th>
+                                <th data-column="ModifyDate" data-sort="true" data-align="center">Modify Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(init);
 
     function init() {
+        reloadTree();
+
+
+
     }
 
-
     $(function () {
+        $("#grid").moonGrid({
+            pageNo: 1,
+            pageSize: 20,
+            searchText: null,
+            filterText: 0,
+            orderColumn: null,
+            orderDesc: null,
+            url:"@Url.Action("GetReportList", "Group")",
+            sync: true,
+            showPager: true,
+            showSort: true,
+            showSearcher: true,
+            showModal: false
+        });
+    });
+
+    @*$(function () {
         $("#grid").moonGrid({
             pageNo: 1,
             pageSize: 10,
@@ -41,14 +72,14 @@
             orderColumn: null,
             orderDesc: null,
             //url: "/ReportView/GetList",
-            url:"@Url.Action("GetUserList", "ReportView")",
+            url:"@Url.Action("GetReportList", "Group")",
             sync: true,
             showPager: true,
             showSort: true,
             showSearcher: true,
             showModal: false
         });
-    });
+    });*@
 
     function grid_click(event)
     {
@@ -61,6 +92,38 @@
     }
 
 
+    function jsTreeSelected() {
+        $('#groupTree').on('select_node.jstree', function (e, data) {
+            var i, j, r = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+            }
+            var selId = r.join(', ');
+
+            groupID = data.node.id;
+            $("#spanTitle").text(data.node.text);
+
+            $("#gridFilterTextHidden").val(selId);
+            $("#gridRefresh").trigger("click");
+            $("#grid2FilterTextHidden").val(selId);
+            $("#grid2Refresh").trigger("click");
+        }).jstree();
+
+    }
+
+    function reloadTree() {
+        $('#groupTree').jstree({
+            'core': {
+                'data': {
+                    'url': "@Url.Action("GetGroupListByUser", "Group")",
+                'data': function (arg) {
+                    console.info(arg);
+                    return { 'UserId': 0, 'GroupId': 0 };
+                }
+            }
+        }
+        });
+    }
 
 </script>
 

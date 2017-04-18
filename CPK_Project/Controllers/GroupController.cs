@@ -306,5 +306,91 @@ namespace CPK_Project.Controllers
             return returnValue;
         }
 
+
+
+        [HttpPost]
+        [AJaxAuthorize]
+        public JsonResult GetReportList(int pageNo, int pageSize, string searchText, string filterText, string orderColumn, string orderDesc)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+
+                    string procedureName = "CPK.uspReportListByUser";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(0), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name, ParameterDirection.Input));
+                    if (orderColumn != null && orderColumn.Length != 0)
+                    {
+                        paraList.Add(Common.GetParameter("Sort", DbType.String, orderColumn + orderDesc, ParameterDirection.Input));
+                        procedureName = "CPK.uspReportListSort";
+                    }
+
+                    DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                    ListViewModel<ReportAdmin> listView = Common.DataToClass<ListViewModel<ReportAdmin>>(DbSet.Tables[0].Rows[0]);
+                    List<ReportAdmin> reportList = Common.DataToList<ReportAdmin>(DbSet.Tables[1]);
+                    listView.Rows = reportList;
+                    return Json(listView, JsonRequestBehavior.DenyGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+
+        [Authorize]
+        public JsonResult GetGroupListByUser(int groupID, string userID)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+                    string nameOfProcedure = "CPK.uspGroupListByUser";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    userID = User.Identity.Name;
+                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(groupID), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
+                    DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
+                    List<GroupTreeModel> groupList = Common.DataToList<GroupTreeModel>(DbSet.Tables[0]);
+
+                    DataTable table = DbSet.Tables[1];
+                    int rowCnt = table.Rows.Count;
+                    for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        bool doAdded = false;
+                        DataRow row = table.Rows[i];
+                        groupList = AddNodeToParentNode(groupList, row, out doAdded);
+                        if (doAdded)
+                        {
+                            table.Rows.Remove(row);
+                            i--;
+                        }
+                    }
+                    rowCnt = table.Rows.Count;
+
+                    JsonResult jResult = Json(groupList, JsonRequestBehavior.AllowGet);
+                    return jResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
     }
+
+
+
+
 }

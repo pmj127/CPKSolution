@@ -130,7 +130,7 @@
         </div>
     </div>
 </div>
-<div id="addReportPop" class="modal fade" role="dialog" style="padding-top: 15%;" >
+@*<div id="addReportPop" class="modal fade" role="dialog" style="padding-top: 15%;" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -229,7 +229,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 
 <script type="text/javascript">
@@ -241,10 +241,10 @@
         jsTreeSelected();
         $('#formAddGoupSave').on('click', formAddGoupSave_click);
         $('#formRemoveGoupSave').on('click', formRemoveGoupSave_click);
-        $('#formAddReportSave').on('click', formAddReportSave_click);
-        $('#formRemoveReportSave').on('click', formRemoveReportSave_click);
-        $('#formAddUserSave').on('click', formAddUserSave_click);
-        $('#formRemoveUserSave').on('click', formRemoveUserSave_click);
+        //$('#formAddReportSave').on('click', formAddReportSave_click);
+        //$('#formRemoveReportSave').on('click', formRemoveReportSave_click);
+        //$('#formAddUserSave').on('click', formAddUserSave_click);
+        //$('#formRemoveUserSave').on('click', formRemoveUserSave_click);
 
         $('#addGroupPop').on('show.bs.modal', function (event) {
             setGroupSelect("selGroup");
@@ -360,7 +360,7 @@
         });
     }
 
-    function formAddReportSave_click() {
+    @*function formAddReportSave_click() {
         $.ajax({
             method: "POST",
             url: "@Url.Action("AddReport", "Group")",
@@ -426,7 +426,7 @@
                 $(".close").click();
             }
         });
-    }
+    }*@
 
     function setReportSelect(name) {
         $.ajax({
@@ -508,7 +508,7 @@
                 'data': {
                     'url': "@Url.Action("GetList", "Group")",
                     'data': function (arg) {
-                        console.info(arg);
+                        //console.info(arg);
                         return { 'UserId': 0, 'GroupId': 0 };
                     }
                 }
