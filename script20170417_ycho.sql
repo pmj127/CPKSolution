@@ -30,18 +30,18 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT COUNT(DISTINCT(r.ReportID)) AS TotalRows, @PageNo AS PageNo, @PageSize AS PageSize
-	FROM CPKSolution.CPK.Reports r
-		JOIN CPKSolution.CPK.ReportGroup rg
+	FROM CPK.Reports r
+		JOIN CPK.ReportGroup rg
 		  ON rg.ReportID = r.ReportID
-		JOIN CPKSolution.CPK.UserGroup ug
+		JOIN CPK.UserGroup ug
 		  ON ug.GroupID = rg.GroupID
 	WHERE ug.UserID = @UserID
 
 	SELECT DISTINCT(r.ReportID), r.ReportName, r.ReportPath, r.Description, r.IsActive, FORMAT(r.ModifyDate,'MMM dd yyyy') ModifyDate
-	FROM CPKSolution.CPK.Reports r
-		JOIN CPKSolution.CPK.ReportGroup rg
+	FROM CPK.Reports r
+		JOIN CPK.ReportGroup rg
 		  ON rg.ReportID = r.ReportID
-		JOIN CPKSolution.CPK.UserGroup ug
+		JOIN CPK.UserGroup ug
 		  ON ug.GroupID = rg.GroupID
 	WHERE ug.UserID = @UserID
 	ORDER BY r.ReportID DESC 
