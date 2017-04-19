@@ -24,67 +24,79 @@
                 <button type="button" class="btn btn-danger" id="btnRemoveGroup" data-toggle="modal" data-target="#removeGroupPop">Remove</button>
             </div>
         </div>
-            <hr />
-            <div class="upperPane" stlye="">
-                <h3>Report List</h3>
-                <div id="grid" style="min-width:400px;height:250px;overflow:auto;">
-                    <div>
-                        <table class="table table-striped table-bordered table-condensed table-hover">
-                            <thead>
-                                <tr>
-                                    <th data-input-type="checkbox" data-input-value="ReportID"></th>
-                                    <th data-column="ReportID" data-align="center">Report ID</th>
-                                    <th data-column="ReportName" data-search="true" data-action="grid_click">Report Name</th>
-                                    <th data-column="ReportPath">Report Path</th>
-                                    <th data-column="IsActive" data-align="center">Active</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+        <hr />
+        <div class="upperPane" stlye="height: 45%">
+            <div class="row" style="margin-top: 5px; margin-right: 3px;">
+                <div class="modal-title" style="float: left; margin-top: 0px; text-align: center; border-top: 0px;">
+                    <h3 style="margin: 10px 0px 0px 15px;">Report List</h3>
                 </div>
-                <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; border-top: 0px;">
+                <div class="modal-title" style="float: right; padding-top: 5px; text-align: center; border-top: 0px;">
                     <button type="button" id="btnReportsModal" class="btn btn-primary" data-toggle="modal"
                             data-target="#ReportsModal" data-backdrop="static" data-keyboard="false"
-                            data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList">
+                            data-fnselect="SetReportGroup" data-fnclose="GetReportGroupList" style="margin-bottom: 10px;">
                         Add Report to Group
                     </button>
-                    <button type="button" class="btn btn-danger" id="btnRemoveReportGroup">Remove Report from Group</button>
+                    <button type="button" class="btn btn-danger" id="btnRemoveReportGroup" style="margin-bottom: 10px;">
+                    Remove Report from Group</button>
                 </div>
-
             </div>
-            <div style="height:10px;"></div>
 
-            <div class="lowerPane">
-                <h3>User List</h3>
-                <div id="grid2" style="min-width:400px;height:185px;overflow:auto;">
-                    <div>
-                        <table class="table table-striped table-bordered table-condensed table-hover">
-                            <thead>
-                                <tr>
-                                    <th data-input-type="checkbox" data-input-value="UserID"></th>
-                                    <th data-column="UserID">UserID</th>
-                                    <th data-column="UserType" data-align="center">Type</th>
-                                    <th data-column="FullName" data-search="true" data-action="grid2_click">Name</th>
-                                    <th data-column="Account" >Account ID</th>
-                                    <th data-column="Status" >Status</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer" style="margin-top: 5px; padding-top: 5px; border-top: 0px;">
-                    <button type="button" id="btnUsersModal" class="btn btn-primary" data-toggle="modal"
-                            data-target="#UsersModal" data-backdrop="static" data-keyboard="false"
-                            data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList">
-                        Add User to Group
-                    </button>
-                    <button type="button" class="btn btn-danger" id="btnRemoveUserGroup">Remove User from Group</button>
+            <div id="grid" style="min-width:400px;height:270px;overflow:auto;">
+                <div>
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-input-type="checkbox" data-input-value="ReportID"></th>
+                                <th data-column="ReportID" data-align="center">Report ID</th>
+                                <th data-column="ReportName" data-search="true" data-action="grid_click">Report Name</th>
+                                <th data-column="ReportPath">Report Path</th>
+                                <th data-column="IsActive" data-align="center">Active</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
+        <div style="height:20px;"></div>
+
+        <div class="lowerPane" style="margin-top: 15px; height: 35%;">
+            <div class="row" style="margin-top: 5px; margin-right: 3px;">
+                <div class="modal-title" style="float: left; margin-top: 0px; text-align: center; border-top: 0px;">
+                    <h3 style="margin: 10px 0px 0px 15px;">User List</h3>
+                </div>
+                <div class="modal-title" style="float: right; padding-top: 5px; text-align: center; border-top: 0px;">
+                    <button type="button" id="btnUsersModal" class="btn btn-primary" data-toggle="modal"
+                            data-target="#UsersModal" data-backdrop="static" data-keyboard="false"
+                            data-fnselect="SetUserGroup" data-fnclose="GetUserGroupList" style="margin-bottom: 10px;">
+                        Add User to Group
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btnRemoveUserGroup" style="margin-bottom: 10px;">
+                        Remove User from Group
+                    </button>
+                </div>
+            </div>
+            <div id="grid2" style="min-width:400px;height:205px;overflow:auto;">
+                <div>
+                    <table class="table table-striped table-bordered table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th data-input-type="checkbox" data-input-value="UserID"></th>
+                                <th data-column="UserID">UserID</th>
+                                <th data-column="UserType" data-align="center">Type</th>
+                                <th data-column="FullName" data-search="true" data-action="grid2_click">Name</th>
+                                <th data-column="Account" >Account ID</th>
+                                <th data-column="Status" >Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 <div id="addGroupPop" class="modal fade" role="dialog" style="padding-top: 15%;" >
     <div class="modal-dialog" role="document">
