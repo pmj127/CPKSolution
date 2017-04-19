@@ -9,6 +9,9 @@ GO
 DROP PROCEDURE [CPK].[uspGroupListByUser]
 GO
 
+DROP PROCEDURE [CPK].[uspGroupRemoveCheck]
+GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -99,6 +102,22 @@ BEGIN
 
 END
 GO
+
+
+
+CREATE PROCEDURE [CPK].[uspGroupRemoveCheck]
+	@GroupId INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	
+
+
+
+END
+GO
+
+
 
 
 

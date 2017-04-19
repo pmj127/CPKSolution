@@ -397,6 +397,38 @@ namespace CPK_Project.Controllers
 
         }
 
+
+        [HttpPost]
+        [AJaxAuthorize]
+        public JsonResult RemoveCheck(string selectedGroup)
+        {
+            try
+            {
+                using (DBManager db = new DBManager())
+                {
+
+                    string procedureName = "CPK.uspGroupRemoveCheck";
+                    List<SqlParameter> paraList = new List<SqlParameter>();
+                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(selectedGroup), ParameterDirection.Input));
+
+                    DataSet DbSet = db.GetSelectQuery(paraList, procedureName);
+                    List<Int32> removeCheck = new List<Int32>();
+                    removeCheck.Add((Int32)DbSet.Tables[0].Rows[0].ItemArray[0]);  // report count
+                    removeCheck.Add((Int32)DbSet.Tables[1].Rows[0].ItemArray[0]);  // user count
+                    removeCheck.Add((Int32)DbSet.Tables[2].Rows[0].ItemArray[0]);  // child group count
+                    return Json(removeCheck, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                JsonError e = new JsonError(ex.Message);
+                return Json(e, JsonRequestBehavior.DenyGet);
+            }
+
+        }
+
+
     }
 
 

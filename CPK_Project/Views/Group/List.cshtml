@@ -140,7 +140,7 @@
             <div class="modal-body">
                 <form id="formRemoveGoup">
                     <div class="form-group">
-                        <h4>Really remove?</h4>
+                        <h4 id="removeWarning">Really remove?</h4>
                     </div>
                     <div class="form-group">
                         <label for="selGroupRemove" class="control-label">Group name:</label>
@@ -178,6 +178,31 @@
         });
 
         $('#removeGroupPop').on('show.bs.modal', function (event) {
+            console.info("removeGroupPop!!!!");
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("RemoveCheck", "Group")",
+                data: {
+                    SelectedGroup: $("#selGroupRemove").val()
+                },
+                error: function () {
+                    console.error("RemoveCheck ERROR");
+                },
+                success: function (data) {
+                    //console.info("data[0]: " + data[0]);
+                    //console.info("data[1]: " + data[1]);
+                    //console.info("data[2]: " + data[2]);
+                    var allCnt = parseInt(data[0]) + parseInt(data[1]) + parseInt(data[2]);
+                    if (allCnt > 0) {
+                        $('#removeWarning').html("It cannot be removed. This group contains reports/users/subgroups.");
+                        $('#formRemoveGoupSave').prop("disabled", true);
+                    } else {
+                        $('#removeWarning').html("Really want to remove?");
+                        $('#formRemoveGoupSave').prop("disabled", false);
+                    }
+                }
+            });
+
         });
 
         $("#btnRemoveReportGroup").click(DeleteReportGroup);
@@ -243,7 +268,6 @@
             success: function (data) {
                 $(".close").click();
                 $('#groupTree').jstree(true).refresh();
-                //setGroupSelect("selGroup");
             }
         });
     }
@@ -261,20 +285,9 @@
             success: function (data) {
                 $(".close").click();
                 $('#groupTree').jstree(true).refresh();
-                //setGroupSelect("selGroupRemove");
             }
         });
     }
-
-
-    //function setGroupSelect(name) {
-    //    var treeData = $('#groupTree').jstree(true).get_json('#', { flat: true }); gridFilterTex
-    //    //$("#" + name).empty();
-    //    //$(treeData).each(function (index, o) {
-    //    //    var $option = $("<option/>").attr("value", o.id).text(o.text);
-    //    //    $("#" + name).append($option);
-    //    //});
-    //}
 
     function jsTreeSelected() {
         $('#groupTree').on('select_node.jstree', function (e, data) {
