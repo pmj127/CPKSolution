@@ -36,6 +36,7 @@ BEGIN
 		JOIN CPK.UserGroup ug
 		  ON ug.GroupID = rg.GroupID
 	WHERE ug.UserID = @UserID
+	  AND (rg.GroupID = @GroupId OR 0 = @GroupId);
 
 	SELECT DISTINCT(r.ReportID), r.ReportName, r.ReportPath, r.Description, r.IsActive, FORMAT(r.ModifyDate,'MMM dd yyyy') ModifyDate
 	FROM CPK.Reports r
@@ -44,6 +45,7 @@ BEGIN
 		JOIN CPK.UserGroup ug
 		  ON ug.GroupID = rg.GroupID
 	WHERE ug.UserID = @UserID
+	  AND (rg.GroupID = @GroupId OR 0 = @GroupId)
 	ORDER BY r.ReportID DESC 
 		OFFSET (@PageNo -1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY
 	OPTION(OPTIMIZE FOR(@PageNo = 1, @PageSize = 10) );
@@ -59,24 +61,19 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT COUNT(DISTINCT(r.ReportID)) AS TotalRows, @PageNo AS PageNo, @PageSize AS PageSize
-	FROM CPKSolution.CPK.Reports r
-		JOIN CPKSolution.CPK.ReportGroup rg
-		  ON rg.ReportID = r.ReportID
-		JOIN CPKSolution.CPK.UserGroup ug
-		  ON ug.GroupID = rg.GroupID
-	WHERE ug.UserID = @UserID
+    SELECT g.GroupID AS 'id', g.GroupName AS 'text', 0 AS 'parentId'
+	FROM [CPK].[Group] g
+		LEFT JOIN [CPK].[ChildGroup] c
+		ON g.GroupID = c.ChildGroupID
+    WHERE c.ChildGroupID IS NULL;
 
-	SELECT DISTINCT(r.ReportID), r.ReportName, r.ReportPath, r.Description, r.IsActive, FORMAT(r.ModifyDate,'MMM dd yyyy') ModifyDate
-	FROM CPKSolution.CPK.Reports r
-		JOIN CPKSolution.CPK.ReportGroup rg
-		  ON rg.ReportID = r.ReportID
-		JOIN CPKSolution.CPK.UserGroup ug
-		  ON ug.GroupID = rg.GroupID
-	WHERE ug.UserID = @UserID
-	ORDER BY r.ReportID DESC 
-		OFFSET (@PageNo -1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY
-	OPTION(OPTIMIZE FOR(@PageNo = 1, @PageSize = 10) );
+	SELECT g.GroupID AS 'id', g.GroupName AS 'text', c.GroupID AS 'parentId', ug.UserID as 'currentUserId'
+	FROM [CPK].[Group] g
+		LEFT OUTER JOIN [CPK].[ChildGroup] c
+		  ON g.GroupID = c.ChildGroupID
+		LEFT OUTER JOIN [CPK].[UserGroup] ug
+		  ON g.GroupID = ug.GroupID
+          AND ug.userid = @UserID;
 
 END
 GO

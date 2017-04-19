@@ -6,6 +6,7 @@
 }
 <script src="~/Scripts/dist/jstree.js"></script>
 <link rel="stylesheet" href="~/Scripts/dist/themes/default/style.css" />
+<link rel="stylesheet" href="~/Scripts/dist/themes/default-dark/style.css" />
 <link rel="stylesheet" href="~/Content/dashboard.css" />
 <div class="row" style="margin-top: 5px;">
     <div class="col-sm-3 col-md-3 sidebar">
@@ -41,7 +42,7 @@
 
     function init() {
         reloadTree();
-
+        jsTreeSelected();
 
 
     }
@@ -94,34 +95,32 @@
 
     function jsTreeSelected() {
         $('#groupTree').on('select_node.jstree', function (e, data) {
-            var i, j, r = [];
-            for (i = 0, j = data.selected.length; i < j; i++) {
-                r.push(data.instance.get_node(data.selected[i]).id);
-            }
-            var selId = r.join(', ');
-
             groupID = data.node.id;
             $("#spanTitle").text(data.node.text);
 
-            $("#gridFilterTextHidden").val(selId);
+            $("#gridFilterTextHidden").val(groupID);
             $("#gridRefresh").trigger("click");
-            $("#grid2FilterTextHidden").val(selId);
+            $("#grid2FilterTextHidden").val(groupID);
             $("#grid2Refresh").trigger("click");
-        }).jstree();
+        });
 
     }
 
     function reloadTree() {
         $('#groupTree').jstree({
             'core': {
+                "themes": {
+                    "name": "default",
+                    "variant" : "large"
+                },             
                 'data': {
                     'url': "@Url.Action("GetGroupListByUser", "Group")",
-                'data': function (arg) {
-                    console.info(arg);
-                    return { 'UserId': 0, 'GroupId': 0 };
+                    'data': function (arg) {
+                        //console.info(arg);
+                        return { 'UserId': 0, 'GroupId': 0 };
+                    }
                 }
             }
-        }
         });
     }
 

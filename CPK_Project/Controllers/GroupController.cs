@@ -47,7 +47,6 @@ namespace CPK_Project.Controllers
                     List<GroupTreeModel> groupList = Common.DataToList<GroupTreeModel>(DbSet.Tables[0]);
 
                     DataTable table = DbSet.Tables[1];
-                    int rowCnt = table.Rows.Count;
                     for (int i = 0; i < table.Rows.Count; i++)
                     {
                         bool doAdded = false;
@@ -59,7 +58,6 @@ namespace CPK_Project.Controllers
                             i--;
                         }
                     }
-                    rowCnt = table.Rows.Count;
 
                     JsonResult jResult = Json(groupList, JsonRequestBehavior.AllowGet);
                     return jResult;
@@ -362,7 +360,6 @@ namespace CPK_Project.Controllers
                     List<GroupTreeModel> groupList = Common.DataToList<GroupTreeModel>(DbSet.Tables[0]);
 
                     DataTable table = DbSet.Tables[1];
-                    int rowCnt = table.Rows.Count;
                     for (int i = 0; i < table.Rows.Count; i++)
                     {
                         bool doAdded = false;
@@ -374,8 +371,20 @@ namespace CPK_Project.Controllers
                             i--;
                         }
                     }
-                    rowCnt = table.Rows.Count;
 
+                    for (int i = 0; i < groupList.Count; i++)
+                    {
+                        bool doExist = false;
+                        while (groupList[i].children != null)
+                        {
+
+                        }
+                        if (!doExist)
+                        {
+                            
+                        }
+                    }
+                    
                     JsonResult jResult = Json(groupList, JsonRequestBehavior.AllowGet);
                     return jResult;
                 }

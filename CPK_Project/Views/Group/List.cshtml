@@ -501,15 +501,6 @@
 
     function jsTreeSelected() {
         $('#groupTree').on('select_node.jstree', function (e, data) {
-            var i, j, r = [];
-            for (i = 0, j = data.selected.length; i < j; i++) {
-                r.push(data.instance.get_node(data.selected[i]).id);
-                //console.info("r[" + i + "]: " + r);
-                //console.info("data.selected[" + i + "]: " + data.selected[i]);
-            }
-            var selId = r.join(', ');
-            //console.info("selId: " + selId);
-
             groupID = data.node.id;
             $("#spanTitle").text(data.node.text);
             $("#selGroupSpan").text(data.node.text);
@@ -518,17 +509,20 @@
             $("#selGroupRemoveSpan").text(data.node.text);
             $("#selGroupRemove").val(data.node.id);
 
-            $("#gridFilterTextHidden").val(selId);
+            $("#gridFilterTextHidden").val(groupID);
             $("#gridRefresh").trigger("click");
-            $("#grid2FilterTextHidden").val(selId);
+            $("#grid2FilterTextHidden").val(groupID);
             $("#grid2Refresh").trigger("click");
-        }).jstree();
+        });
 
     }
 
     function reloadTree() {
         $('#groupTree').jstree({
             'core': {
+                "themes": {
+                    "variant": "large"
+                },
                 'data': {
                     'url': "@Url.Action("GetList", "Group")",
                     'data': function (arg) {

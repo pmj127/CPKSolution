@@ -15,6 +15,8 @@ namespace CPK_Project.Models
 
         public int parentId { get; set; }
 
+        public string currentUserId { get; set; }
+
         public List<GroupTreeModel> children { get; set; }
     }
 
