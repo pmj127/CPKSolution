@@ -18,7 +18,7 @@
         <div class="row" style="margin-top: 5px;">
             <div class="modal-title" style="float: left; padding-top: 5px; text-align: center; border-top: 0px;">
                 <h2 style="margin: 5px 0px 0px 15px;">
-                    Manage: <span id="spanTitle">Root</span> Group
+                    <span id="spanTitle">All</span> Reports
                 </h2>
             </div>
         </div>
@@ -28,10 +28,9 @@
                 <table class="table table-striped table-bordered table-condensed table-hover">
                     <thead>
                         <tr>
-                            <th data-input-type="radio" data-input-value="ReportID" data-action="grid_radio_click"></th>
-                            <th data-column="ReportID"  data-align="center">Report ID</th>
-                            <th data-column="ReportName"  data-search="true" data-action="grid_click">Report Name</th>
-                            <th data-column="ReportPath">Report Path</th>
+                            <th data-column="ReportID"  data-input-value="ReportID" data-action="grid_radio_click" data-align="center">Report ID</th>
+                            <th data-column="ReportName"  data-search="true" data-input-value="ReportID" data-action="grid_radio_click" >Report Name</th>
+                            <th data-column="ReportPath"  data-input-value="ReportID" data-action="grid_radio_click">Report Path</th>
                             <th data-column="IsActive" data-align="center">Active</th>
                             <th data-column="ModifyDate"  data-align="center">Modify Date</th>
                         </tr>
@@ -64,28 +63,10 @@
             sync: true,
             showPager: true,
             showSort: true,
-            showSearcher: true,
+            showSearcher: false,
             showModal: false
         });
     });
-
-    @*$(function () {
-        $("#grid").moonGrid({
-            pageNo: 1,
-            pageSize: 10,
-            searchText: null,
-            filterText: null,
-            orderColumn: null,
-            orderDesc: null,
-            //url: "/ReportView/GetList",
-            url:"@Url.Action("GetReportList", "Group")",
-            sync: true,
-            showPager: true,
-            showSort: true,
-            showSearcher: true,
-            showModal: false
-        });
-    });*@
 
     function grid_click(event)
     {
@@ -99,7 +80,7 @@
 
     function logoClick() {
         groupID = 0;
-        $("#spanTitle").text("Root");
+        $("#spanTitle").text("All");
         $("#gridFilterTextHidden").val(groupID);
         $("#gridRefresh").trigger("click");
         $('#groupTree').jstree().deselect_all();
