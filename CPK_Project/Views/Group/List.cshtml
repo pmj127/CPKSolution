@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="~/Content/dashboard.css" />
 <div class="row"  style="margin-top: 5px;">
     <div class="col-sm-3 col-md-3 sidebar">
+        <img src="~/Content/Images/treeLogo.png" id="logoImg" style="cursor:pointer" />
         <div id="groupTree" style="min-width:300px;">
         </div>
     </div>
@@ -252,6 +253,7 @@
     function init() {
         reloadTree();
         jsTreeSelected();
+        $('#logoImg').on('click', logoClick);
         $('#formAddGoupSave').on('click', formAddGoupSave_click);
         $('#formRemoveGoupSave').on('click', formRemoveGoupSave_click);
         //$('#formAddReportSave').on('click', formAddReportSave_click);
@@ -444,7 +446,7 @@
         });
     }*@
 
-    function setReportSelect(name) {
+    @*function setReportSelect(name) {
         $.ajax({
             method: "POST", 
             url: "@Url.Action("GetListByGroup", "ReportView")",
@@ -465,14 +467,14 @@
                 });
             }
         });
-    }
+    }*@
 
-    function setUserSelect(name) {
+    @*function setUserSelect(name) {
         $.ajax({
             method: "POST", 
             url: "@Url.Action("GetListByGroup", "Account")",
             data: {
-            filterText: 0
+                filterText: 0
             },
             error: function () {
                 console.error("setUserSelect ERROR");
@@ -488,10 +490,10 @@
                 });
             }
         });
-    }
+    }*@
 
     function setGroupSelect(name) {
-        var treeData = $('#groupTree').jstree(true).get_json('#', { flat: true });
+        var treeData = $('#groupTree').jstree(true).get_json('#', { flat: true }); gridFilterTex
         //$("#" + name).empty();
         //$(treeData).each(function (index, o) {
         //    var $option = $("<option/>").attr("value", o.id).text(o.text);
@@ -514,7 +516,16 @@
             $("#grid2FilterTextHidden").val(groupID);
             $("#grid2Refresh").trigger("click");
         });
+    }
 
+    function logoClick() {
+        groupID = 0;
+        $("#spanTitle").text("Root");
+        $("#gridFilterTextHidden").val(groupID);
+        $("#gridRefresh").trigger("click");
+        $("#grid2FilterTextHidden").val(groupID);
+        $("#grid2Refresh").trigger("click");
+        $('#groupTree').jstree().deselect_all();
     }
 
     function reloadTree() {

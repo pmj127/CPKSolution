@@ -61,19 +61,41 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT g.GroupID AS 'id', g.GroupName AS 'text', 0 AS 'parentId'
-	FROM [CPK].[Group] g
-		LEFT JOIN [CPK].[ChildGroup] c
-		ON g.GroupID = c.ChildGroupID
-    WHERE c.ChildGroupID IS NULL;
+	
+	WITH TREELIST AS
+	(
+		SELECT G.GroupID, G.GroupName, C.GroupID ParentID, 1 Authority
+			FROM [CPK].[Group] G
+				INNER JOIN [CPK].[UserGroup] U
+			        ON G.GroupID = U.GroupID
+				LEFT OUTER JOIN [CPK].[ChildGroup] C
+			        ON G.GroupID = C.ChildGroupID
+		WHERE U.UserID = @UserID
 
-	SELECT g.GroupID AS 'id', g.GroupName AS 'text', c.GroupID AS 'parentId', ug.UserID as 'currentUserId'
-	FROM [CPK].[Group] g
-		LEFT OUTER JOIN [CPK].[ChildGroup] c
-		  ON g.GroupID = c.ChildGroupID
-		LEFT OUTER JOIN [CPK].[UserGroup] ug
-		  ON g.GroupID = ug.GroupID
-          AND ug.userid = @UserID;
+		UNION ALL
+
+		SELECT G.GroupID, G.GroupName, NULL ParentID, Authority + 1 Authority
+			FROM TREELIST T
+				INNER JOIN [CPK].[Group] G
+		            ON T.ParentID = G.GroupID
+
+		UNION ALL
+
+		SELECT G.GroupID, G.GroupName, C.GroupID ParentID, Authority + 1 Authority
+			FROM TREELIST T
+				INNER JOIN [CPK].[Group] G
+					ON T.ParentID = G.GroupID
+				INNER JOIN [CPK].[ChildGroup] C
+					ON G.GroupID = C.ChildGroupID
+		WHERE T.ParentID IS NOT NULL
+
+	)
+	SELECT GroupID AS 'id', GroupName AS 'text',  MIN(ParentID) AS 'parentId', MIN(Authority) AS 'Authority'
+	    FROM TREELIST
+	GROUP BY GroupID, GroupName
+	ORDER BY id
+	OPTION (MAXRECURSION 4);
+
 
 END
 GO

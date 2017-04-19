@@ -320,7 +320,7 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("PageNo", DbType.Int32, Convert.ToInt32(pageNo), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("PageSize", DbType.Int32, Convert.ToInt32(pageSize), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("ReportName", DbType.String, searchText, ParameterDirection.Input));
-                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(0), ParameterDirection.Input));
+                    paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(filterText), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("UserID", DbType.String, User.Identity.Name, ParameterDirection.Input));
                     if (orderColumn != null && orderColumn.Length != 0)
                     {
@@ -357,34 +357,34 @@ namespace CPK_Project.Controllers
                     paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(groupID), ParameterDirection.Input));
                     paraList.Add(Common.GetParameter("UserID", DbType.String, userID, ParameterDirection.Input));
                     DataSet DbSet = db.GetSelectQuery(paraList, nameOfProcedure);
-                    List<GroupTreeModel> groupList = Common.DataToList<GroupTreeModel>(DbSet.Tables[0]);
+                    List<GroupTreeModel> groupList = new List<GroupTreeModel>();
+                    DataTable table = DbSet.Tables[0];
+                    for (int i = 0; i < table.Rows.Count; i++)
+                    {
+                        DataRow row = table.Rows[i];
+                        GroupTreeModel groupNode = Common.DataToClass<GroupTreeModel>(row);
+                        if (groupNode.parentId == 0)
+                        {
+                            groupList.Add(groupNode);
+                        }
+                    }
 
-                    DataTable table = DbSet.Tables[1];
                     for (int i = 0; i < table.Rows.Count; i++)
                     {
                         bool doAdded = false;
                         DataRow row = table.Rows[i];
-                        groupList = AddNodeToParentNode(groupList, row, out doAdded);
-                        if (doAdded)
+                        GroupTreeModel groupNode = Common.DataToClass<GroupTreeModel>(row);
+                        if (groupNode.parentId != 0)
                         {
-                            table.Rows.Remove(row);
-                            i--;
+                            groupList = AddNodeToParentNode(groupList, row, out doAdded);
+                            if (doAdded)
+                            {
+                                table.Rows.Remove(row);
+                                i--;
+                            }
                         }
                     }
 
-                    for (int i = 0; i < groupList.Count; i++)
-                    {
-                        bool doExist = false;
-                        while (groupList[i].children != null)
-                        {
-
-                        }
-                        if (!doExist)
-                        {
-                            
-                        }
-                    }
-                    
                     JsonResult jResult = Json(groupList, JsonRequestBehavior.AllowGet);
                     return jResult;
                 }

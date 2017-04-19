@@ -93,7 +93,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 	DECLARE @MAXINT int;
-	SELECT MAX(GroupID) + 1 AS @MAXINT FROM [CPK].[Group]);
+	SELECT @MAXINT = MAX(GroupID) + 1  FROM [CPK].[Group];
 
     INSERT INTO [CPK].[Group](GroupID, GroupName, Description, IsActive, ModifyDate)
 	VALUES (@MAXINT, @GroupName, @Description, 'TRUE', GETDATE());
