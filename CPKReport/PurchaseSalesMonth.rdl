@@ -358,7 +358,7 @@ ORDER BY OrderYear, OrderMonth
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartLegendTitle>
-                  <Caption />
+                  <Caption>Sales by Month</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -715,7 +715,7 @@ ORDER BY OrderYear, OrderMonth
                   <FontSize>8pt</FontSize>
                 </Style>
                 <ChartLegendTitle>
-                  <Caption />
+                  <Caption>Purchases by Month</Caption>
                   <Style>
                     <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
@@ -728,7 +728,7 @@ ORDER BY OrderYear, OrderMonth
             </ChartLegends>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Purchase</Caption>
+                <Caption>Purchases</Caption>
                 <Style>
                   <BackgroundColor>LightSteelBlue</BackgroundColor>
                   <BackgroundGradientType>None</BackgroundGradientType>
@@ -758,8 +758,8 @@ ORDER BY OrderYear, OrderMonth
               </Style>
             </ChartNoDataMessage>
             <DataSetName>PurchaseSalses</DataSetName>
-            <Top>0.61333in</Top>
-            <Left>3.25in</Left>
+            <Top>0.59945in</Top>
+            <Left>3.23611in</Left>
             <Height>2.79167in</Height>
             <Width>3.19791in</Width>
             <ZIndex>1</ZIndex>
@@ -786,16 +786,51 @@ ORDER BY OrderYear, OrderMonth
                   </TextRun>
                 </TextRuns>
                 <Style>
-                  <TextAlign>Center</TextAlign>
+                  <TextAlign>Left</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>0.22792in</Top>
-            <Left>2.64458in</Left>
+            <Left>3.26958in</Left>
             <Height>0.31597in</Height>
             <Width>1.0625in</Width>
             <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>The Year</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>0.2418in</Top>
+            <Left>2.13764in</Left>
+            <Height>0.31597in</Height>
+            <Width>1.0625in</Width>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
