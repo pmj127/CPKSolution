@@ -117,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label for="selGroup" class="control-label">Parent Group:</label>
-                        <h3><span id="selGroupSpan"></span> Group</h3>
+                        <h3><span id="selGroupSpan">Root</span> Group</h3>
                         <input type="hidden" id="selGroup">
                         @*<select id="selGroup">
                         </select>*@
@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-group">
                         <label for="selGroupRemove" class="control-label">Group name:</label>
-                        <h3><span id="selGroupRemoveSpan"></span> Group</h3>
+                        <h3><span id="selGroupRemoveSpan">Root</span> Group</h3>
                         <input type="hidden" id="selGroupRemove">
                     </div>
                 </form>
@@ -178,7 +178,7 @@
         });
 
         $('#removeGroupPop').on('show.bs.modal', function (event) {
-            console.info("removeGroupPop!!!!");
+            //console.info("removeGroupPop!!!!");
             $.ajax({
                 method: "POST",
                 url: "@Url.Action("RemoveCheck", "Group")",
@@ -193,7 +193,10 @@
                     //console.info("data[1]: " + data[1]);
                     //console.info("data[2]: " + data[2]);
                     var allCnt = parseInt(data[0]) + parseInt(data[1]) + parseInt(data[2]);
-                    if (allCnt > 0) {
+                    if (allCnt < 0) {
+                        $('#removeWarning').html("Root cannot be removed.");
+                        $('#formRemoveGoupSave').prop("disabled", true);
+                    } else if (allCnt > 0) {
                         $('#removeWarning').html("It cannot be removed. This group contains reports/users/subgroups.");
                         $('#formRemoveGoupSave').prop("disabled", true);
                     } else {
@@ -285,6 +288,7 @@
             success: function (data) {
                 $(".close").click();
                 $('#groupTree').jstree(true).refresh();
+                logoClick();
             }
         });
     }
@@ -309,6 +313,10 @@
     function logoClick() {
         groupID = 0;
         $("#spanTitle").text("Root");
+        $("#selGroupSpan").text("Root");
+        $("#selGroupRemoveSpan").text("Root");
+        $("#selGroupRemove").val(groupID);
+        $("#selGroup").val(groupID);
         $("#gridFilterTextHidden").val(groupID);
         $("#gridRefresh").trigger("click");
         $("#grid2FilterTextHidden").val(groupID);
