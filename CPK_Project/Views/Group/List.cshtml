@@ -333,11 +333,17 @@
                 'data': {
                     'url': "@Url.Action("GetList", "Group")",
                     'data': function (arg) {
-                        //console.info(arg);
-                        return { 'UserId': 0, 'GroupId': 0 };
+                        return { 'GroupId': '0', 'UserId': '0' };
                     }
                 }
-            }
+            },
+            'types': {
+                "root": {
+                    "icon": "../Content/Images/companies-128.png",
+                    "valid_children": ["default"]
+                }
+            },
+            "plugins": [ "types" ]
         });
     }
 
