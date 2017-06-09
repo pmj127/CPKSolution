@@ -409,6 +409,10 @@ namespace CPK_Project.Controllers
 
                     string procedureName = "CPK.uspGroupRemoveCheck";
                     List<SqlParameter> paraList = new List<SqlParameter>();
+                    if (selectedGroup == null || selectedGroup == "" || selectedGroup == "0")
+                    {
+                        return Json(new List<Int32>() { -1, -1, -1 }, JsonRequestBehavior.AllowGet);
+                    }
                     paraList.Add(Common.GetParameter("GroupID", DbType.Int32, Convert.ToInt32(selectedGroup), ParameterDirection.Input));
 
                     DataSet DbSet = db.GetSelectQuery(paraList, procedureName);

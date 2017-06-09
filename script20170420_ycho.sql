@@ -12,6 +12,9 @@ GO
 DROP PROCEDURE [CPK].[uspGroupRemoveCheck]
 GO
 
+DROP PROCEDURE [CPK].[uspGroupAdd]
+GO
+
 
 SET ANSI_NULLS ON
 GO
@@ -127,6 +130,29 @@ END
 GO
 
 
+
+
+CREATE PROCEDURE [CPK].[uspGroupAdd]
+	@GroupName NVARCHAR(50) ,
+	@Description NVARCHAR(100),
+	@ParentGroup INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @MAXINT int;
+	SELECT @MAXINT = MAX(GroupID) + 1  FROM [CPK].[Group];
+
+    INSERT INTO [CPK].[Group](GroupID, GroupName, Description, IsActive, ModifyDate)
+	VALUES (@MAXINT, @GroupName, @Description, 'TRUE', GETDATE());
+
+	IF (@ParentGroup <> 0)
+	BEGIN
+
+		INSERT INTO [CPK].[ChildGroup](GroupID, ChildGroupID)
+		VALUES (@ParentGroup, @MAXINT);
+
+	END
+END
 
 
 
