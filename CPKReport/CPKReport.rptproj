@@ -22,6 +22,14 @@
       <FullPath>PurchaseOrderMonthly.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>PurchaseSales.rdl</Name>
+      <FullPath>PurchaseSales.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>PurchaseSalesMonth.rdl</Name>
+      <FullPath>PurchaseSalesMonth.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>PurchasingOrderTotal.rdl</Name>
       <FullPath>PurchasingOrderTotal.rdl</FullPath>
     </ProjectItem>
@@ -42,12 +50,8 @@
       <FullPath>test2.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>PurchaseSales.rdl</Name>
-      <FullPath>PurchaseSales.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>PurchaseSalesMonth.rdl</Name>
-      <FullPath>PurchaseSalesMonth.rdl</FullPath>
+      <Name>metric.rdl</Name>
+      <FullPath>metric.rdl</FullPath>
     </ProjectItem>
   </Reports>
   <Configurations>

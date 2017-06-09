@@ -2429,6 +2429,10 @@
                               <KeepWithGroup>Before</KeepWithGroup>
                             </TablixMember>
                           </TablixMembers>
+                          <Visibility>
+                            <Hidden>true</Hidden>
+                            <ToggleItem>VendorName</ToggleItem>
+                          </Visibility>
                         </TablixMember>
                         <TablixMember>
                           <TablixHeader>
